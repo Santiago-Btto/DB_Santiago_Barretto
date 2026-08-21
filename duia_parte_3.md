@@ -12,11 +12,11 @@
 
 ## Aporte de IA y control humano
 
-La IA explico que la condicion de baja de cartelera necesita una regla de negocio verificable, por ejemplo una fecha de fin validada en el esquema, y que `NOT EXISTS` evita la semantica de tres valores de `NOT IN` con `NULL`. El estudiante debe sustituir los campos ilustrativos por nombres confirmados de su propia base antes de ejecutar.
+La IA explico que la condicion de baja de cartelera necesita una regla de negocio verificable, por ejemplo una fecha de fin validada en el esquema, y que `NOT EXISTS` evita la semantica de tres valores de `NOT IN` con `NULL`. La revision estatica incluyo la aclaracion de que las tablas del ejercicio son genericas de catedra y una reproduccion minima del caso `NULL`. El estudiante debe sustituir los campos ilustrativos por nombres confirmados de su propia base antes de ejecutar.
 
 ## Verificacion real
 
-Estado actual: **PENDIENTE DE EJECUCION**. Solo se hizo revision estatica de documentos y SQL, sin ejecucion de base de datos ni evidencia capturada.
+Estado actual: **PENDIENTE DE EJECUCION**. La revision estatica incluyo los nuevos cambios de seguridad en documentos y SQL; no se ejecuto la base de datos ni se capturo evidencia.
 
 Completar despues de ejecutar:
 

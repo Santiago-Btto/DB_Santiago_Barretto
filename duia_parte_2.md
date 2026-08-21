@@ -12,11 +12,11 @@
 
 ## Aporte de IA y control humano
 
-La IA estructuro los bloques por sesion y aislamiento, con productos identificados por un prefijo exclusivo de laboratorio. El estudiante debe coordinar los puntos de espera entre sesiones, capturar las salidas y comprobar que la limpieza final se haya ejecutado.
+La IA estructuro los bloques por sesion y aislamiento. La revision estatica incluyo el marcador unico compartido por ambas sesiones, filtros por la descripcion exacta de la semilla, limpieza transaccional y el limite de espera de bloqueo de diez segundos. El estudiante debe coordinar los puntos de espera, capturar las salidas y comprobar que la limpieza final se haya ejecutado.
 
 ## Verificacion real
 
-Estado actual: **PENDIENTE DE EJECUCION**. Hubo revision estatica; no hubo dos sesiones PostgreSQL ejecutadas ni resultados capturados.
+Estado actual: **PENDIENTE DE EJECUCION**. La revision estatica incluyo los cambios de seguridad indicados; no hubo dos sesiones PostgreSQL ejecutadas ni resultados capturados.
 
 Completar despues de ejecutar:
 
