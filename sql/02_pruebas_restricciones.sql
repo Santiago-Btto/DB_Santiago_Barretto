@@ -1,6 +1,17 @@
 -- Requiere las tres restricciones de 01_restricciones_integridad.sql aplicadas.
 -- Prueba autocontenida: no deja filas persistentes porque finaliza con ROLLBACK.
 -- Ejecutar en psql sin ON_ERROR_STOP: los tres errores posteriores son esperados.
+-- Los errores esperados solo demuestran las reglas si la consulta siguiente muestra
+-- las tres restricciones esperadas como presentes antes de iniciar la prueba.
+SELECT conname AS restriccion_esperada, contype AS tipo
+FROM pg_constraint
+WHERE conname IN (
+    'ck_producto_precio_positivo',
+    'ck_producto_nombre_no_vacio',
+    'ck_detalle_precio_positivo'
+)
+ORDER BY conname;
+
 BEGIN;
 
 CREATE TEMP TABLE prueba_refs (
