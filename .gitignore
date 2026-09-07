@@ -10,3 +10,7 @@ backups/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Archivos temporales generados durante la ejecucion y QA del TP3.
+tp3/*.log
+tp3/qa_render/
