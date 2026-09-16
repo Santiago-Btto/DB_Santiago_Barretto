@@ -11,6 +11,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | Base inicial | Modelo Food Store | `schema.sql`, tablas `cliente`, `categoria`, `producto`, `pedido` y `detalle_pedido`, claves, restricciones e indices iniciales. | Depende de la ejecucion local de `schema.sql`. |
 | TP2 - Unidad 1 Semana 2 | Integridad, transacciones y concurrencia | Propuestas de restricciones de negocio, pruebas reversibles, laboratorio de dos sesiones, protocolo de seguridad, lectura critica y DUIA. | Scripts y documentos preparados. Las restricciones y escenarios deben verificarse en PostgreSQL real antes de afirmarlos como ejecutados. |
 | TP3 - Unidad 2 Semana 3 | Optimizacion de consultas | Carga masiva de laboratorio, `ANALYZE`, tres consultas candidatas, indices bajo medicion, equivalencias con `EXCEPT`, competencia y DUIA. | Ejecutado en copias aisladas; evidencia real en `tp3/evidencia/20260907_134508/`. |
+| TP4 - Unidad 2 Semana 4 | Reportes analiticos asistidos por IA | Consultas con joins, agregacion y ventana; lectura critica de planes; equivalencia formal; competencia y DUIA. | Ejecutado y documentado con planes reales en `tp4/evidencia/`. |
 
 ## Estructura
 
@@ -21,6 +22,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 - `sql/03_laboratorio_concurrencia.sql`: guia de dos sesiones para TP2.
 - `informe_concurrencia.md`, `ejercicio_lectura_critica.md`, `duia_parte_*.md`: documentacion y evidencias de TP2.
 - `tp3/`: todos los scripts, documentacion, evidencia y el informe Word de TP3.
+- `tp4/`: scripts PostgreSQL y DBeaver, planes antes/despues, resultados, DUIA y PDF final de TP4.
 
 ## Ejecucion segura
 
@@ -43,6 +45,14 @@ La guia completa y los scripts estan en `tp3/README.md`. Sobre una copia `food_s
 ```
 
 El runner crea `tp3/evidencia/<fecha_hora>/` con la carga, los planes antes y despues, definiciones de indices y verificaciones de equivalencia. El informe Word `tp3/TP3_Entrega_Santiago_Barretto.docx` se completa con esa evidencia, sin inventar valores.
+
+## TP4
+
+El TP4 continúa sobre la base masiva de TP3 y trabaja con consultas analíticas que combinan `cliente`, `categoria`, `producto`, `pedido` y `detalle_pedido`. Se midieron planes con `EXPLAIN (ANALYZE, BUFFERS)` antes y después de proponer índices con asistencia de IA.
+
+Se evaluaron tres reportes: facturación por categoría y mes, ranking de clientes por gasto y ventas mensuales de un producto puntual. Q1 se rechazó porque empeoró; Q2 no se atribuyó al índice porque el plan relevante no cambió; Q3 se aceptó porque el acceso a `detalle_pedido` pasó de `Parallel Seq Scan` a `Index Only Scan`, de 65,141 ms a 0,460 ms.
+
+También se documentó la lectura crítica de los `Nested Loop`, se compararon dos versiones de un ranking y de una subconsulta correlacionada con `EXCEPT` en ambos sentidos (las cuatro verificaciones devolvieron `0`), y se registraron las decisiones en la DUIA. La resolución detallada está en `tp4/README.md`; el archivo de entrega es `tp4/DB_Santiago_Barretto.pdf`.
 
 ## Como agregar los proximos trabajos practicos
 
