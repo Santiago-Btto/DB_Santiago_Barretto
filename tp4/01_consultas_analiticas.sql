@@ -22,7 +22,7 @@ JOIN detalle_pedido AS det ON det.id_pedido = ped.id_pedido
 JOIN producto AS prod ON prod.id_producto = det.id_producto
 JOIN categoria AS cat ON cat.id_categoria = prod.id_categoria
 CROSS JOIN parametros AS par
-WHERE ped.fecha >= par.referencia - interval '30 days'
+WHERE ped.fecha >= par.referencia - interval '90 days'
   AND prod.activo
   AND cat.activo
 GROUP BY date_trunc('month', ped.fecha), cat.id_categoria, cat.nombre
@@ -44,7 +44,7 @@ gasto_cliente AS (
     JOIN detalle_pedido AS det ON det.id_pedido = ped.id_pedido
     JOIN producto AS prod ON prod.id_producto = det.id_producto
     CROSS JOIN parametros AS par
-    WHERE ped.fecha >= par.referencia - interval '30 days'
+WHERE ped.fecha >= par.referencia - interval '90 days'
       AND prod.activo
     GROUP BY cli.id_cliente, cli.nombre, cli.apellido
 )

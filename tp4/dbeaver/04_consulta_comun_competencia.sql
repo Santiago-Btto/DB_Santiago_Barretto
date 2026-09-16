@@ -1,21 +1,20 @@
--- PARTE 4 - Consulta comun de competencia para DBeaver.
--- Ejecutar antes y despues de 02_indices.sql en una copia de laboratorio.
+-- PARTE 4 - Consulta común de competencia para DBeaver.
+-- Ejecutar este mismo reporte en una copia sin el índice de Q3 y luego con él.
+-- Combina producto, categoría, detalle_pedido y pedido, con agregación mensual.
 EXPLAIN (ANALYZE, BUFFERS)
-WITH parametros AS (
-    SELECT max(fecha) AS referencia
-    FROM pedido
-)
-SELECT cat.id_categoria,
+SELECT date_trunc('month', ped.fecha) AS mes,
+       prod.id_producto,
+       prod.nombre AS producto,
        cat.nombre AS categoria,
-       count(DISTINCT ped.id_pedido) AS pedidos,
-       sum(det.cantidad * det.precio_unitario) AS facturacion_30_dias
-FROM categoria AS cat
-JOIN producto AS prod ON prod.id_categoria = cat.id_categoria
+       sum(det.cantidad) AS unidades_vendidas,
+       sum(det.cantidad * det.precio_unitario) AS facturacion
+FROM producto AS prod
+JOIN categoria AS cat ON cat.id_categoria = prod.id_categoria
 JOIN detalle_pedido AS det ON det.id_producto = prod.id_producto
 JOIN pedido AS ped ON ped.id_pedido = det.id_pedido
-CROSS JOIN parametros AS par
-WHERE cat.activo
+WHERE prod.id_producto = 100001
   AND prod.activo
-  AND ped.fecha >= par.referencia - interval '30 days'
-GROUP BY cat.id_categoria, cat.nombre
-ORDER BY facturacion_30_dias DESC, cat.id_categoria ASC;
+  AND cat.activo
+GROUP BY date_trunc('month', ped.fecha),
+         prod.id_producto, prod.nombre, cat.nombre
+ORDER BY mes ASC, prod.id_producto ASC;

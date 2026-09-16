@@ -1,23 +1,22 @@
-# DUIA - TP4: reportes analiticos y optimizacion de joins
+# DUIA - TP4: reportes analíticos y optimización de joins
 
-## Declaracion transparente
+## Declaración transparente
 
-Herramienta de asistencia: Codex / OpenAI. Se utilizo para proponer consultas, indices candidatos, specs y controles de equivalencia. La aceptacion depende de comprender cada sentencia, medirla en una copia y contrastarla contra el plan real. No se declaran aqui mejoras, algoritmos ni tiempos que aun no hayan sido medidos.
+Herramienta de asistencia: Codex / OpenAI. Se usó para formular consultas, proponer índices candidatos, producir alternativas de las specs y explicar un plan real. Cada propuesta se leyó y se contrastó con `EXPLAIN (ANALYZE, BUFFERS)` en una copia de laboratorio antes de decidir.
 
-| Herramienta | Para que se uso | Prompt / spec (resumen) | Se acepto / descarto y por que |
+| Herramienta | Para qué se usó | Prompt o spec resumido | Decisión basada en evidencia |
 |---|---|---|---|
-| Codex / OpenAI | Parte 1 | Proponer dos consultas analiticas Food Store con al menos tres joins, agregacion y ventana, usando solo el esquema entregado. | SQL preparado; pendiente de validar los planes reales antes/despues. |
-| Codex / OpenAI | Indices | Proponer indices para filtrar `pedido` por fecha y cubrir el join desde pedido hacia detalle. | Candidatos creados como hipotesis; completar decision con evidencia real. |
-| Codex / OpenAI | Q3 e indice puntual | Proponer un indice para ventas mensuales de `id_producto = 100001`, revisando el acceso a `detalle_pedido`. | Aceptado tras medir: `idx_tp4_detalle_producto_pedido` paso de Parallel Seq Scan a Index Only Scan y de 65.141 ms a 0.460 ms (141.61x). |
-| Codex / OpenAI | Parte 2 | Explicar un plan real nodo por nodo, distinguiendo costo estimado y tiempo real. | Pendiente de pegar plan y contraste de la ejecucion real. |
-| Codex / OpenAI | Parte 3 | Generar una version alternativa de un ranking y de una subconsulta correlacionada, con `EXCEPT` bidireccional. | Aceptar solo si los cuatro controles devuelven 0. |
-| Codex / OpenAI | Competencia | Proponer una estrategia basada en el plan comun medido. | Pendiente: registrar tanto propuestas descartadas como la decision final. |
+| Codex / OpenAI | Q1 y Q2 | Proponer consultas con cuatro tablas, agregación y ranking, e índices que redujeran el join desde pedido hacia detalle. | Los índices se crearon y midieron. Q1 empeoró de 392,846 ms a 424,434 ms; se rechazó. Q2 bajó de 402,742 ms a 334,318 ms, pero mantuvo tres `Hash Join` y el `Seq Scan` relevante; no se aceptó una relación causal con el índice. |
+| Codex / OpenAI | Q3 e índice puntual | Proponer un acceso selectivo para ventas mensuales de `id_producto = 100001` y justificarlo con el plan. | Aceptado: `idx_tp4_detalle_producto_pedido` reemplazó `Parallel Seq Scan` por `Index Only Scan`; 65,141 ms a 0,460 ms (141,61x). |
+| Codex / OpenAI | Parte 2 | Explicar Q3 nodo por nodo, identificando entradas de cada `Nested Loop` y separando costos de tiempos. | Aceptado tras contrastar cada afirmación con `q_producto_despues.txt`; la explicación y correcciones están en `lectura_critica_plan.md`. |
+| Codex / OpenAI | Parte 3 | Generar una alternativa estructural para un ranking y otra para una subconsulta correlacionada. | Aceptado porque los cuatro controles bidireccionales con `EXCEPT` devolvieron 0. |
+| Codex / OpenAI | Competencia | Proponer una estrategia para una consulta común con cuatro tablas y agregación. | Se usó Q3 como consulta común. Se descartaron las hipótesis generales de Q1/Q2 y se aceptó solo el índice selectivo de Q3. |
 
-## Registro de decisiones despues de medir
+## Registro de decisiones después de medir
 
-| Fecha | Consulta | Propuesta de IA | Evidencia real revisada | Decision y motivo |
+| Fecha | Consulta | Propuesta de IA | Evidencia real revisada | Decisión y motivo |
 |---|---|---|---|---|
-| PENDIENTE | Q1 | PENDIENTE | PENDIENTE | PENDIENTE |
-| PENDIENTE | Q2 | PENDIENTE | PENDIENTE | PENDIENTE |
-| 2026-09-15 | Q3 ventas mensuales de producto 100001 | `idx_tp4_detalle_producto_pedido` con cobertura de cantidad y precio | Parallel Seq Scan de detalle: 65.141 ms; Index Only Scan: 0.460 ms | Aceptado: 141.61x de mejora real, con el mismo reporte y filtro. |
-| PENDIENTE | Competencia | PENDIENTE | PENDIENTE | PENDIENTE |
+| 2026-09-15 | Q1 facturación por categoría y mes | Índice temporal de pedido y cobertura de detalle. | 392,846 ms antes; 424,434 ms después. Persistieron `Hash Join` y `Seq Scan` sobre detalle. | Rechazado: empeoró y no hay nodo que justifique el índice. |
+| 2026-09-15 | Q2 ranking de clientes por gasto | Misma cobertura por fecha y detalle. | 402,742 ms antes; 334,318 ms después. Persistieron los tres `Hash Join` y el acceso completo a detalle. | No aceptado como mejora causada por el índice: el cambio temporal no vino acompañado de un cambio de plan relevante. |
+| 2026-09-15 | Q3 ventas mensuales de producto 100001 | `idx_tp4_detalle_producto_pedido` con cobertura de cantidad y precio. | `Parallel Seq Scan`: 65,141 ms. `Index Only Scan`: 0,460 ms. | Aceptado: 141,61x con el mismo reporte y filtro. |
+| 2026-09-15 | Competencia | Índice inverso por producto sobre detalle. | La misma comparación antes/después de Q3: 65,141 ms y 0,460 ms. | Aceptado: mejor tiempo real y cambio de acceso verificable. |

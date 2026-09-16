@@ -1,6 +1,6 @@
 -- PARTE 3 - Spec 1: ranking con funcion de ventana.
 -- Tablas: cliente, pedido, detalle_pedido y producto.
--- Filtros: 30 dias previos a la fecha maxima cargada; producto.activo = true. Cliente, pedido y
+-- Filtros: 90 dias previos a la fecha maxima cargada; producto.activo = true. Cliente, pedido y
 -- detalle_pedido no tienen columna de borrado logico en este esquema.
 -- Salida: un cliente por fila, con nombre, apellido, total gastado y RANK descendente.
 -- Empates: comparten puesto; el ORDER BY final desempata por id_cliente sin cambiar RANK.
@@ -17,7 +17,7 @@ gasto_cliente AS (
     JOIN detalle_pedido AS det ON det.id_pedido = ped.id_pedido
     JOIN producto AS prod ON prod.id_producto = det.id_producto
     CROSS JOIN parametros AS par
-    WHERE ped.fecha >= par.referencia - interval '30 days'
+    WHERE ped.fecha >= par.referencia - interval '90 days'
       AND prod.activo
     GROUP BY cli.id_cliente, cli.nombre, cli.apellido
 )
@@ -38,7 +38,7 @@ clientes_con_gasto AS (
                JOIN detalle_pedido AS det ON det.id_pedido = ped.id_pedido
                JOIN producto AS prod ON prod.id_producto = det.id_producto
                WHERE ped.id_cliente = cli.id_cliente
-                 AND ped.fecha >= par.referencia - interval '30 days'
+                 AND ped.fecha >= par.referencia - interval '90 days'
                  AND prod.activo
            ) AS total_gastado
     FROM cliente AS cli
@@ -49,7 +49,7 @@ clientes_con_gasto AS (
         JOIN detalle_pedido AS det ON det.id_pedido = ped.id_pedido
         JOIN producto AS prod ON prod.id_producto = det.id_producto
         WHERE ped.id_cliente = cli.id_cliente
-          AND ped.fecha >= par.referencia - interval '30 days'
+          AND ped.fecha >= par.referencia - interval '90 days'
           AND prod.activo
     )
 )
@@ -80,7 +80,7 @@ WHERE prod.activo
       FROM detalle_pedido AS det
       JOIN pedido AS ped ON ped.id_pedido = det.id_pedido
       WHERE det.id_producto = prod.id_producto
-        AND ped.fecha >= par.referencia - interval '30 days'
+        AND ped.fecha >= par.referencia - interval '90 days'
   )
 ORDER BY categoria ASC, producto ASC, prod.id_producto ASC;
 
@@ -95,7 +95,7 @@ JOIN categoria AS cat ON cat.id_categoria = prod.id_categoria
 LEFT JOIN detalle_pedido AS det ON det.id_producto = prod.id_producto
 LEFT JOIN pedido AS ped
   ON ped.id_pedido = det.id_pedido
- AND ped.fecha >= (SELECT referencia - interval '30 days' FROM parametros)
+ AND ped.fecha >= (SELECT referencia - interval '90 days' FROM parametros)
 WHERE prod.activo
   AND cat.activo
 GROUP BY prod.id_producto, prod.nombre, cat.nombre, prod.precio_lista
@@ -113,7 +113,7 @@ spec1_ia AS (
         JOIN detalle_pedido det ON det.id_pedido = ped.id_pedido
         JOIN producto prod ON prod.id_producto = det.id_producto
         CROSS JOIN parametros par
-        WHERE ped.fecha >= par.referencia - interval '30 days' AND prod.activo
+        WHERE ped.fecha >= par.referencia - interval '90 days' AND prod.activo
         GROUP BY cli.id_cliente, cli.nombre, cli.apellido
     )
     SELECT id_cliente, nombre, apellido, total_gastado,
@@ -129,7 +129,7 @@ spec1_propia AS (
                 JOIN producto prod ON prod.id_producto = det.id_producto
                 CROSS JOIN parametros par
                 WHERE ped.id_cliente = cli.id_cliente
-                  AND ped.fecha >= par.referencia - interval '30 days'
+                  AND ped.fecha >= par.referencia - interval '90 days'
                   AND prod.activo) AS total_gastado
         FROM cliente cli
         WHERE EXISTS (
@@ -138,7 +138,7 @@ spec1_propia AS (
             JOIN producto prod ON prod.id_producto = det.id_producto
             CROSS JOIN parametros par
             WHERE ped.id_cliente = cli.id_cliente
-              AND ped.fecha >= par.referencia - interval '30 days'
+              AND ped.fecha >= par.referencia - interval '90 days'
               AND prod.activo
         )
     )
@@ -156,7 +156,7 @@ spec2_ia AS (
           SELECT 1 FROM detalle_pedido det
           JOIN pedido ped ON ped.id_pedido = det.id_pedido
           WHERE det.id_producto = prod.id_producto
-            AND ped.fecha >= par.referencia - interval '30 days'
+            AND ped.fecha >= par.referencia - interval '90 days'
       )
 ),
 spec2_propia AS (
@@ -166,7 +166,7 @@ spec2_propia AS (
     LEFT JOIN detalle_pedido det ON det.id_producto = prod.id_producto
     LEFT JOIN pedido ped
       ON ped.id_pedido = det.id_pedido
-     AND ped.fecha >= (SELECT referencia - interval '30 days' FROM parametros)
+     AND ped.fecha >= (SELECT referencia - interval '90 days' FROM parametros)
     WHERE prod.activo AND cat.activo
     GROUP BY prod.id_producto, prod.nombre, cat.nombre, prod.precio_lista
     HAVING count(ped.id_pedido) = 0

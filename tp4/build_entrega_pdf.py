@@ -8,14 +8,14 @@ from reportlab.lib.units import cm
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Preformatted
 
 ROOT = Path(__file__).resolve().parent
-OUT = ROOT / 'Barretto_Santiago_TP4.pdf'
+OUT = ROOT / 'DB_Santiago_Barretto.pdf'
 EVIDENCIA = ROOT / 'evidencia' / '20260915_producto'
 
 styles = getSampleStyleSheet()
 styles.add(ParagraphStyle(name='BodySmall', parent=styles['BodyText'], fontSize=8.5, leading=11, spaceAfter=7))
 styles.add(ParagraphStyle(name='H1x', parent=styles['Heading1'], fontSize=15, leading=19, textColor=colors.black, spaceBefore=10, spaceAfter=8))
 styles.add(ParagraphStyle(name='H2x', parent=styles['Heading2'], fontSize=11.5, leading=14, textColor=colors.black, spaceBefore=8, spaceAfter=6))
-styles.add(ParagraphStyle(name='Tiny', fontName='Courier', fontSize=4.4, leading=5.2))
+styles.add(ParagraphStyle(name='Tiny', fontName='Courier', fontSize=6.2, leading=7.2))
 
 def P(text, style='BodySmall'):
     return Paragraph(text, styles[style])
@@ -36,7 +36,7 @@ def table(data, widths):
     ]))
     return t
 
-def wrap_lines(text, n=170):
+def wrap_lines(text, n=125):
     out=[]
     for line in text.splitlines():
         out.extend(line[i:i+n] for i in range(0, max(1,len(line)), n))
@@ -54,8 +54,8 @@ story += [P('<b>Conclusión.</b> El trabajo se ejecutó sobre copias aisladas de
 story += [P('1. Preparación y protocolo', 'H1x'), P('Se creó la copia <b>food_store_tp4_evidencia</b> a partir de la base masiva de TP3. La carga disponible contiene 20.000 clientes, 50.000 productos, 200.000 pedidos y 400.000 detalles. Se trabajó con respaldo previo y sin modificar practica_bd2.')]
 story += [P('2. Parte 1 - Consultas analíticas y medición', 'H1x')]
 data=[[P('Consulta'),P('Plan antes'),P('Cambio'),P('Plan después'),P('Mejora / decisión')],
-      [P('Q1 Facturación por categoría y mes'),P('Hash Join y Seq Scan de detalle; 417,755 ms.'),P('Índices de fecha y cobertura de pedido.'),P('Hash Join conservado; 439,954 ms.'),P('0,95x. Rechazado: el plan no usó el índice nuevo.')],
-      [P('Q2 Ranking de clientes por gasto'),P('Hash Join, agregación y ventana; 402,742 ms.'),P('Misma hipótesis de cobertura.'),P('Hash Join conservado; 334,318 ms.'),P('No aceptado como causal: no hubo cambio de nodo atribuible al índice.')],
+      [P('Q1 Facturación por categoría y mes'),P('Parallel Hash Join, Hash Join y Seq Scan de detalle; 392,846 ms.'),P('Índices de fecha y cobertura de pedido.'),P('Tres Hash Join; Seq Scan conservado; 424,434 ms.'),P('0,93x. Rechazado: empeoró y no usó los índices nuevos.')],
+      [P('Q2 Ranking de clientes por gasto'),P('Tres Hash Join, agregación y ventana; 402,742 ms.'),P('Misma hipótesis de cobertura.'),P('Tres Hash Join conservados; 334,318 ms.'),P('1,20x observado, no aceptado como causal: sin cambio de nodo.')],
       [P('Q3 Ventas mensuales del producto 100001'),P('Parallel Seq Scan de detalle; 65,141 ms.'),P('Índice idx_tp4_detalle_producto_pedido.'),P('Index Only Scan; 0,460 ms.'),P('141,61x. Aceptado.')]]
 story += [table(data,[3.0*cm,3.2*cm,3.2*cm,3.0*cm,3.2*cm]), Spacer(1,0.3*cm)]
 story += [P('Q3 combina producto, categoría, detalle_pedido y pedido. El índice aceptado es <b>CREATE INDEX idx_tp4_detalle_producto_pedido ON detalle_pedido (id_producto, id_pedido) INCLUDE (cantidad, precio_unitario)</b>. El filtro por id_producto dejó de recorrer 400.000 detalles y accedió solo a las ocho líneas correspondientes.')]
