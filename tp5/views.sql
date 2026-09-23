@@ -26,3 +26,14 @@ SELECT ped.id_pedido,
        cli.email
 FROM pedido AS ped
 JOIN cliente AS cli ON cli.id_cliente = ped.id_cliente;
+
+-- Detalle de cada pedido con nombre de producto y subtotal estandarizado.
+CREATE OR REPLACE VIEW vw_tp5_detalle_pedido_producto AS
+SELECT det.id_pedido,
+       det.id_producto,
+       prod.nombre AS producto,
+       det.cantidad,
+       det.precio_unitario,
+       det.cantidad * det.precio_unitario AS subtotal
+FROM detalle_pedido AS det
+JOIN producto AS prod ON prod.id_producto = det.id_producto;
