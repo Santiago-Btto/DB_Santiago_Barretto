@@ -16,12 +16,4 @@ La IA estructuro los bloques por sesion y aislamiento. La revision estatica incl
 
 ## Verificacion real
 
-Estado actual: **PENDIENTE DE EJECUCION**. La revision estatica incluyo los cambios de seguridad indicados; no hubo dos sesiones PostgreSQL ejecutadas ni resultados capturados.
-
-Completar despues de ejecutar:
-
-```text
-Comandos reales por sesion:
-Salidas reales y tiempos de espera observados:
-Version de PostgreSQL y nivel de aislamiento confirmado:
-```
+Ejecución verificada el 23/09/2026 con PostgreSQL 18.4 y dos sesiones independientes. La salida `tpi/evidencia/20260923_214500/06_concurrencia.txt` registra lectura no repetible, lectura fantasma y espera de bloqueo, comparando `READ COMMITTED` con `REPEATABLE READ`. El ejecutor reproducible es `tpi/04_ejecutar_concurrencia.ps1`.

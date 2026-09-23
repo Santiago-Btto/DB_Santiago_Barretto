@@ -13,6 +13,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | TP3 - Unidad 2 Semana 3 | Optimizacion de consultas | Carga masiva de laboratorio, `ANALYZE`, tres consultas candidatas, indices bajo medicion, equivalencias con `EXCEPT`, competencia y DUIA. | Ejecutado en copias aisladas; evidencia real en `tp3/evidencia/20260907_134508/`. |
 | TP4 - Unidad 2 Semana 4 | Reportes analiticos asistidos por IA | Consultas con joins, agregacion y ventana; lectura critica de planes; equivalencia formal; competencia y DUIA. | Ejecutado y documentado con planes reales en `tp4/evidencia/`. |
 | TP5 - Unidad 3 Semana 1 | Índices, vistas y vistas materializadas | Plan de indexado medido, costo de escritura, vistas de reportes, seguridad por mínimo privilegio y resumen materializado. | Ejecutado sobre copias aisladas; mediciones reales en `tp5/informe_mediciones.md`. |
+| TPI - Primera entrega parcial | Integración Unidades 1, 2 y 3 | Modelo ER, mapeo relacional, 3FN/BCNF, migración final, PL/pgSQL, triggers, borrado lógico y evidencia de concurrencia. | Ejecutado en `food_store_tpi_verificacion_final`; evidencia real en `tpi/evidencia/20260923_214500/`. |
 
 ## Estructura
 
@@ -25,6 +26,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 - `tp3/`: todos los scripts, documentacion, evidencia y el informe Word de TP3.
 - `tp4/`: scripts PostgreSQL y DBeaver, planes antes/despues, resultados, DUIA y PDF final de TP4.
 - `tp5/`: plan de índices, vistas, materializada, especificaciones, DUIA y scripts PostgreSQL/DBeaver de TP5.
+- `tpi/`: scripts de integración, modelo ER, normalización, checklist, informe técnico y evidencia del TPI.
 
 ## Ejecucion segura
 
@@ -61,6 +63,10 @@ También se documentó la lectura crítica de los `Nested Loop`, se compararon d
 TP5 agrega índices y vistas sin modificar las tablas base. Se midieron tres consultas con `Seq Scan` inicial: detalles por producto, autocompletado de productos y búsqueda de clientes. Los índices aceptados cambiaron el acceso a `Bitmap Index Scan` o `Index Only Scan`; también se midió el costo adicional de insertar 600 detalles.
 
 Las cuatro vistas se validaron con `EXCEPT` en ambos sentidos y devolvieron cero diferencias. La vista materializada de facturación por categoría y mes redujo el tiempo del reporte de 550,464 ms a 0,067 ms. La guía y las decisiones reproducibles están en `tp5/README.md` e `tp5/informe_mediciones.md`.
+
+## TPI
+
+La primera entrega parcial se resuelve en `tpi/`. El orden es: crear una copia desde `schema.sql`, ejecutar `tpi/01_migracion_modelo_final.sql`, `tpi/02_objetos_programables.sql` y `tpi/03_pruebas_objetos.sql`. Los documentos `tpi/docs/` acreditan ER, paso relacional y normalización; `tpi/docs/04_checklist_tpi.md` relaciona cada uno de los nueve requisitos con su evidencia. El informe breve solicitado está en `tpi/informe_tecnico_tpi.md`.
 
 ## Como agregar los proximos trabajos practicos
 

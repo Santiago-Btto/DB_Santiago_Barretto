@@ -62,7 +62,7 @@ COMMIT;
 
 **Resultado esperado segun PostgreSQL.** En `READ COMMITTED`, cada sentencia ve una instantanea nueva y el segundo valor puede ser `20.00`. En `REPEATABLE READ`, ambas lecturas de A pertenecen a la instantanea inicial y deben conservar el mismo valor, aunque B confirme `30.00`.
 
-**Observacion real del motor: PENDIENTE DE EJECUCION.** Registrar los dos valores leidos, mensajes de `BEGIN` y `COMMIT`, version del motor y capturas.
+**Observación real del motor.** PostgreSQL 18.4 en `food_store_tpi_verificacion_final`: `READ COMMITTED` leyó `10.00` y luego `20.00`; `REPEATABLE READ` leyó `10.00` en ambas consultas mientras B confirmó `30.00`. Salida completa: `tpi/evidencia/20260923_214500/06_concurrencia.txt`.
 
 ## 2. Lectura fantasma
 
@@ -113,7 +113,7 @@ COMMIT;
 
 **Resultado esperado segun PostgreSQL.** En `READ COMMITTED`, el segundo conteo puede aumentar en uno. En `REPEATABLE READ`, el segundo conteo debe ser igual al primero porque A conserva su instantanea inicial; la fila insertada por B no es visible para esa transaccion.
 
-**Observacion real del motor: PENDIENTE DE EJECUCION.** Registrar ambos conteos por aislamiento y la confirmacion de cada insercion de B.
+**Observación real del motor.** En `READ COMMITTED`, el conteo pasó de `2` a `3` después del COMMIT de B. En `REPEATABLE READ`, permaneció en `2` aunque B insertó una fila. Salida completa: `tpi/evidencia/20260923_214500/06_concurrencia.txt`.
 
 ## 3. Espera por bloqueo
 
@@ -139,7 +139,7 @@ COMMIT;
 
 **Resultado esperado segun PostgreSQL.** Si A libera la fila mediante `COMMIT` o `ROLLBACK` antes de diez segundos, B puede terminar el `SELECT` y confirmar. Si A no la libera, B recibe un error de `lock timeout`; este es un resultado de seguridad controlado. PostgreSQL cancela la sentencia y la transaccion de B queda abortada, por lo que B debe ejecutar `ROLLBACK;` antes de continuar.
 
-**Observacion real del motor: PENDIENTE DE EJECUCION.** Registrar hora de inicio de B, hora de liberacion o vencimiento, mensaje final de B y, si hubo `lock timeout`, el `ROLLBACK` ejecutado.
+**Observación real del motor.** B inició a las `20:30:49.634868-03` y adquirió el bloqueo a las `20:30:52.401280-03`, en el mismo instante de la liberación de A (`20:30:52.401283-03`). La espera quedó dentro del límite de cinco segundos. Salida completa: `tpi/evidencia/20260923_214500/06_concurrencia.txt`.
 
 ## Limpieza final (sesion A)
 
@@ -153,9 +153,8 @@ COMMIT;
 
 ## Checklist de evidencia real
 
-- [ ] Usar el mismo `laboratorio_id` unico en ambas sesiones.
-- [ ] Ejecutar preparacion y limpieza final en `food_store_tp2`.
-- [ ] Abrir dos sesiones `psql` independientes.
-- [ ] Reemplazar cada campo **PENDIENTE DE EJECUCION** por salidas o capturas reales.
-- [ ] Conservar comandos, version de PostgreSQL y nivel de aislamiento usado.
-- [ ] No presentar resultados esperados como resultados observados.
+- [x] Usar el mismo `laboratorio_id` único en ambas sesiones.
+- [x] Ejecutar preparación y limpieza final en la base aislada `food_store_tpi_verificacion_final`.
+- [x] Abrir dos sesiones `psql` independientes mediante el ejecutor reproducible `tpi/04_ejecutar_concurrencia.ps1`.
+- [x] Guardar salidas reales, versión de PostgreSQL y niveles de aislamiento usados.
+- [x] Diferenciar las expectativas de los resultados observados.

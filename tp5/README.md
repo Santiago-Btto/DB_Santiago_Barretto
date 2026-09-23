@@ -15,7 +15,7 @@ Ambas copias provienen de `food_store_tp3_mediciones`. Nunca ejecutar estos scri
 2. En `food_store_tp5_base`, ejecutar `01_consultas_frecuentes.sql` y `03_medicion_escritura.sql` para guardar el estado inicial.
 3. En `food_store_tp5_indices_vistas`, crear cada índice de `indices/` en el orden indicado por `indices.sql`; luego ejecutar `01_consultas_frecuentes.sql` y `03_medicion_escritura.sql`.
 4. En `food_store_tp5_indices_vistas`, ejecutar `views.sql`, `05_equivalencia_views.sql`, `materializadas.sql` y `07_medicion_materializada.sql`.
-5. Completar o revisar `informe_mediciones.md` y `duia.md` solo con resultados que estén en `evidencia/`.
+5. Completar o revisar `informe_mediciones.md` y `duia.md` solo con resultados que estén en `evidencia/`. La verificación posterior del TPI se conserva en `evidencia/20260923_tpi/`.
 
 Para DBeaver, usar los archivos de `dbeaver/`, que no incluyen metacomandos de `psql`.
 

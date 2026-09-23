@@ -8,7 +8,7 @@
 
 ## Prompt utilizado
 
-> Redactar en espanol un informe de concurrencia con tres escenarios del laboratorio Food Store. Cada seccion debe contener orden exacto de comandos, explicacion basada en PostgreSQL, resultado esperado marcado como esperado y campos de observacion real marcados PENDIENTE DE EJECUCION. Agregar una lectura critica de un UPDATE que desactiva todas las peliculas y de un DELETE basado en NOT IN que falla si la subconsulta contiene NULL; proponer una correccion segura sin inventar columnas del esquema.
+> Redactar en español un informe de concurrencia con tres escenarios del laboratorio Food Store. Cada sección debe contener orden exacto de comandos, explicación basada en PostgreSQL y una separación clara entre resultado esperado y resultado observado. Agregar una lectura crítica de un UPDATE que desactiva todas las películas y de un DELETE basado en NOT IN que falla si la subconsulta contiene NULL; proponer una corrección segura sin inventar columnas del esquema.
 
 ## Aporte de IA y control humano
 
@@ -16,12 +16,4 @@ La IA explico que la condicion de baja de cartelera necesita una regla de negoci
 
 ## Verificacion real
 
-Estado actual: **PENDIENTE DE EJECUCION**. La revision estatica incluyo los nuevos cambios de seguridad en documentos y SQL; no se ejecuto la base de datos ni se capturo evidencia.
-
-Completar despues de ejecutar:
-
-```text
-Esquema/tabla/columnas validados para el ejercicio critico:
-Evidencia real incorporada al informe:
-Cambios realizados tras la revision docente:
-```
+La ejecución posterior se documentó con evidencia de motor en `tpi/evidencia/20260923_214500/06_concurrencia.txt`. El informe actualizado en `informe_concurrencia.md` incorpora los resultados observados y mantiene la lectura crítica como análisis separado de las tablas genéricas de cátedra.

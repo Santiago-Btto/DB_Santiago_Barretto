@@ -34,7 +34,7 @@ Si se prefiere ejecutar manualmente, respetar este orden: `00_preflight.sql`, `0
 
 ## Parte 1 - revision de la carga
 
-`01_carga_masiva.sql` inserta, dentro de una unica transaccion, exactamente 50.000 productos, 20.000 clientes, 200.000 pedidos y 400.000 detalles. Usa `generate_series`, mantiene PK, FK, `UNIQUE(email)` y todos los `CHECK` del esquema. Los productos se distribuyen de forma ciclica entre las categorias existentes; sus precios estan entre 500 y 5000 y el stock entre 0 y 200. Si falla un conteo, la transaccion se revierte. Luego del `COMMIT`, ejecuta `ANALYZE` sobre las cuatro tablas afectadas.
+`01_carga_masiva.sql` inserta, dentro de una unica transaccion, exactamente 50.000 productos, 20.000 clientes, 200.000 pedidos y 400.000 detalles. Usa `generate_series`, mantiene PK, FK, unicidad de email para clientes vigentes y todos los `CHECK` del esquema. Los productos se distribuyen de forma ciclica entre las categorias existentes; sus precios estan entre 500 y 5000 y el stock entre 0 y 200. Si falla un conteo, la transaccion se revierte. Luego del `COMMIT`, ejecuta `ANALYZE` sobre las cuatro tablas afectadas.
 
 Leer `01_carga_masiva.sql` antes de ejecutarlo: el marcador de lote se incorpora a nombres y correos para auditar los datos generados. La comprobacion de lote evita reutilizarlo.
 

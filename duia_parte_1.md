@@ -16,12 +16,4 @@ La IA propuso reemplazar los dos `CHECK` no negativos por `CHECK (> 0)` y agrega
 
 ## Verificacion real
 
-Estado actual: **PENDIENTE DE EJECUCION**. Solo se realizo revision estatica de los archivos; no se ejecutaron comandos contra PostgreSQL.
-
-Completar despues de ejecutar:
-
-```text
-Comandos reales:
-Resultado real / errores de restricciones observados:
-Fecha, base y version de PostgreSQL:
-```
+Ejecución verificada el 23/09/2026 sobre `food_store_tpi_verificacion_final`, PostgreSQL 18.4. `tpi/03_pruebas_objetos.sql` comprobó mediante bloques que capturan `check_violation` el rechazo de precio de lista cero, nombre compuesto solo por espacios y precio unitario cero. La transacción terminó con `ROLLBACK`; salida en `tpi/evidencia/20260923_214500/04_pruebas_objetos.txt`.
