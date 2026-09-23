@@ -1,0 +1,3 @@
+-- Índices aceptados de TP5.
+-- Se completa incrementalmente: cada bloque está además en índices/ para que el
+-- historial de Git muestre la decisión individual y su medición correspondiente.
