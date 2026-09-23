@@ -1,4 +1,4 @@
-# Spec Kiro - Índice de búsqueda de clientes
+# Spec Codex - Índice de búsqueda de clientes
 
 Objetivo: acelerar la búsqueda de clientes por prefijo de apellido.
 

@@ -1,4 +1,4 @@
-# Spec Kiro - Índice de autocompletado de productos
+# Spec Codex - Índice de autocompletado de productos
 
 Objetivo: acelerar el autocompletado de productos activos por prefijo de nombre.
 

@@ -27,4 +27,4 @@ Para DBeaver, usar los archivos de `dbeaver/`, que no incluyen metacomandos de `
 | Autocompletado del catálogo de productos activos | `producto` (50.000 filas) | Índice parcial de prefijo sobre nombre. |
 | Búsqueda de clientes por apellido | `cliente` (20.000 filas) | Índice de prefijo sobre apellido. |
 
-Las especificaciones están en `specs/`. Los resultados y decisiones finales quedan trazados en `informe_mediciones.md` y `duia.md`.
+Las especificaciones están en `specs/`. El uso real de Codex/OpenCode se registra en `registro_codex.md` y `duia.md`; los resultados y decisiones finales quedan trazados en `informe_mediciones.md`.

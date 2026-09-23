@@ -1,4 +1,4 @@
-# Spec Kiro - Índice de detalles por producto
+# Spec Codex - Índice de detalles por producto
 
 Objetivo: acelerar la consulta frecuente que recupera los detalles de venta de un producto puntual y los ordena por pedido.
 

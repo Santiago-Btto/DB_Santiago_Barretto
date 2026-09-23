@@ -1,4 +1,4 @@
-# Spec Kiro - Vistas de reportes Food Store
+# Spec Codex - Vistas de reportes Food Store
 
 Crear cuatro vistas sin modificar tablas base:
 

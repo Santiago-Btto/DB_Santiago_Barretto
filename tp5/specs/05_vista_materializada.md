@@ -1,4 +1,4 @@
-# Spec Kiro - Vista materializada de facturación
+# Spec Codex - Vista materializada de facturación
 
 Objetivo: precalcular facturación y cantidad de pedidos por categoría y mes para un reporte analítico costoso.
 
