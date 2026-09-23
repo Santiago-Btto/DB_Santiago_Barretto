@@ -20,7 +20,8 @@ SELECT prod.id_producto,
        prod.stock
 FROM producto AS prod
 WHERE prod.activo
-  AND prod.nombre LIKE 'TP3_SB2026TP3_PRODUCTO_049%'
+  -- Los guiones bajos son literales del código de catálogo, no comodines de LIKE.
+  AND prod.nombre LIKE 'TP3\_SB2026TP3\_PRODUCTO\_049%' ESCAPE '\\'
 ORDER BY prod.nombre
 LIMIT 100;
 

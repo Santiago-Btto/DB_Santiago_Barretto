@@ -9,3 +9,12 @@ CREATE INDEX idx_tp5_detalle_producto_pedido
     INCLUDE (cantidad, precio_unitario);
 
 ANALYZE detalle_pedido;
+
+-- Q2: text_pattern_ops permite buscar un prefijo con LIKE; la condición parcial
+-- evita indexar los productos inactivos que la consulta nunca muestra.
+CREATE INDEX idx_tp5_producto_nombre_activo_prefijo
+    ON producto (nombre text_pattern_ops)
+    INCLUDE (id_producto, precio_lista, stock)
+    WHERE activo;
+
+ANALYZE producto;
