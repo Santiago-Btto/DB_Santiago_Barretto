@@ -18,3 +18,10 @@ CREATE INDEX idx_tp5_producto_nombre_activo_prefijo
     WHERE activo;
 
 ANALYZE producto;
+
+-- Q3: el apellido se usa como prefijo y orden; nombre y email cubren la salida.
+CREATE INDEX idx_tp5_cliente_apellido_prefijo
+    ON cliente (apellido text_pattern_ops)
+    INCLUDE (id_cliente, nombre, email);
+
+ANALYZE cliente;
