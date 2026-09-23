@@ -37,3 +37,12 @@ SELECT det.id_pedido,
        det.cantidad * det.precio_unitario AS subtotal
 FROM detalle_pedido AS det
 JOIN producto AS prod ON prod.id_producto = det.id_producto;
+
+-- Mínimo privilegio para reportes. El esquema no tiene columna contraseña;
+-- se omite teléfono, que no es necesario para identificar al cliente.
+CREATE OR REPLACE VIEW vw_tp5_clientes_reportes AS
+SELECT cli.id_cliente,
+       cli.nombre,
+       cli.apellido,
+       cli.email
+FROM cliente AS cli;
