@@ -12,6 +12,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | TP2 - Unidad 1 Semana 2 | Integridad, transacciones y concurrencia | Propuestas de restricciones de negocio, pruebas reversibles, laboratorio de dos sesiones, protocolo de seguridad, lectura critica y DUIA. | Scripts y documentos preparados. Las restricciones y escenarios deben verificarse en PostgreSQL real antes de afirmarlos como ejecutados. |
 | TP3 - Unidad 2 Semana 3 | Optimizacion de consultas | Carga masiva de laboratorio, `ANALYZE`, tres consultas candidatas, indices bajo medicion, equivalencias con `EXCEPT`, competencia y DUIA. | Ejecutado en copias aisladas; evidencia real en `tp3/evidencia/20260907_134508/`. |
 | TP4 - Unidad 2 Semana 4 | Reportes analiticos asistidos por IA | Consultas con joins, agregacion y ventana; lectura critica de planes; equivalencia formal; competencia y DUIA. | Ejecutado y documentado con planes reales en `tp4/evidencia/`. |
+| TP5 - Unidad 3 Semana 1 | Índices, vistas y vistas materializadas | Plan de indexado medido, costo de escritura, vistas de reportes, seguridad por mínimo privilegio y resumen materializado. | Ejecutado sobre copias aisladas; mediciones reales en `tp5/informe_mediciones.md`. |
 
 ## Estructura
 
@@ -23,6 +24,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 - `informe_concurrencia.md`, `ejercicio_lectura_critica.md`, `duia_parte_*.md`: documentacion y evidencias de TP2.
 - `tp3/`: todos los scripts, documentacion, evidencia y el informe Word de TP3.
 - `tp4/`: scripts PostgreSQL y DBeaver, planes antes/despues, resultados, DUIA y PDF final de TP4.
+- `tp5/`: plan de índices, vistas, materializada, especificaciones, DUIA y scripts PostgreSQL/DBeaver de TP5.
 
 ## Ejecucion segura
 
@@ -53,6 +55,12 @@ El TP4 continúa sobre la base masiva de TP3 y trabaja con consultas analíticas
 Se evaluaron tres reportes: facturación por categoría y mes, ranking de clientes por gasto y ventas mensuales de un producto puntual. Q1 se rechazó porque empeoró; Q2 no se atribuyó al índice porque el plan relevante no cambió; Q3 se aceptó porque el acceso a `detalle_pedido` pasó de `Parallel Seq Scan` a `Index Only Scan`, de 65,141 ms a 0,460 ms.
 
 También se documentó la lectura crítica de los `Nested Loop`, se compararon dos versiones de un ranking y de una subconsulta correlacionada con `EXCEPT` en ambos sentidos (las cuatro verificaciones devolvieron `0`), y se registraron las decisiones en la DUIA. La resolución detallada está en `tp4/README.md`; el archivo de entrega es `tp4/DB_Santiago_Barretto.pdf`.
+
+## TP5
+
+TP5 agrega índices y vistas sin modificar las tablas base. Se midieron tres consultas con `Seq Scan` inicial: detalles por producto, autocompletado de productos y búsqueda de clientes. Los índices aceptados cambiaron el acceso a `Bitmap Index Scan` o `Index Only Scan`; también se midió el costo adicional de insertar 600 detalles.
+
+Las cuatro vistas se validaron con `EXCEPT` en ambos sentidos y devolvieron cero diferencias. La vista materializada de facturación por categoría y mes redujo el tiempo del reporte de 550,464 ms a 0,067 ms. La guía y las decisiones reproducibles están en `tp5/README.md` e `tp5/informe_mediciones.md`.
 
 ## Como agregar los proximos trabajos practicos
 
