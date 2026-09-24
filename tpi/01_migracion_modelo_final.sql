@@ -21,13 +21,13 @@ SELECT 'categoria_nombre_vacio', id_categoria::text FROM categoria WHERE btrim(n
 
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ck_cliente_nombre_no_vacio') THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'cliente'::regclass AND conname = 'ck_cliente_nombre_no_vacio') THEN
         ALTER TABLE cliente ADD CONSTRAINT ck_cliente_nombre_no_vacio CHECK (btrim(nombre) <> '');
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ck_cliente_apellido_no_vacio') THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'cliente'::regclass AND conname = 'ck_cliente_apellido_no_vacio') THEN
         ALTER TABLE cliente ADD CONSTRAINT ck_cliente_apellido_no_vacio CHECK (btrim(apellido) <> '');
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ck_categoria_nombre_no_vacio') THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'categoria'::regclass AND conname = 'ck_categoria_nombre_no_vacio') THEN
         ALTER TABLE categoria ADD CONSTRAINT ck_categoria_nombre_no_vacio CHECK (btrim(nombre) <> '');
     END IF;
     IF NOT EXISTS (
@@ -39,14 +39,14 @@ BEGIN
     ) THEN
         ALTER TABLE categoria ADD CONSTRAINT uq_categoria_nombre UNIQUE (nombre);
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ck_producto_precio_positivo') THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'producto'::regclass AND conname = 'ck_producto_precio_positivo') THEN
         ALTER TABLE producto DROP CONSTRAINT IF EXISTS ck_producto_precio_no_negativo;
         ALTER TABLE producto ADD CONSTRAINT ck_producto_precio_positivo CHECK (precio_lista > 0);
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ck_producto_nombre_no_vacio') THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'producto'::regclass AND conname = 'ck_producto_nombre_no_vacio') THEN
         ALTER TABLE producto ADD CONSTRAINT ck_producto_nombre_no_vacio CHECK (btrim(nombre) <> '');
     END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ck_detalle_precio_positivo') THEN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = 'detalle_pedido'::regclass AND conname = 'ck_detalle_precio_positivo') THEN
         ALTER TABLE detalle_pedido DROP CONSTRAINT IF EXISTS ck_detalle_precio_no_negativo;
         ALTER TABLE detalle_pedido ADD CONSTRAINT ck_detalle_precio_positivo CHECK (precio_unitario > 0);
     END IF;

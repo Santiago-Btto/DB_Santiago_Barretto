@@ -4,7 +4,7 @@
 
 | Unidad | Implementación incorporada | Verificación |
 |---|---|---|
-| 1 - Integridad y concurrencia | CHECK, UNIQUE, borrado lógico, dos procedimientos PL/pgSQL, dos triggers, auditoría y rol de reportes. | `evidencia/20260923_214500/01_schema.txt` a `04_pruebas_objetos.txt`. |
+| 1 - Integridad y concurrencia | CHECK, UNIQUE, borrado lógico, tres procedimientos PL/pgSQL, dos triggers, auditoría y rol de reportes. | `evidencia/20260923_214500/01_schema.txt` a `04_pruebas_objetos.txt`. |
 | 2 - Optimización | Carga masiva, consultas con JOIN, agregación, subconsultas, ventana e índices medidos. | Evidencias históricas de `tp3/` y `tp4/`. |
 | 3 - Índices y vistas | Índices de TP5, cuatro vistas, una vista materializada e índices parciales para bajas lógicas. | `tp5/evidencia/20260923_tpi/`. |
 
@@ -17,9 +17,11 @@ La base aislada `food_store_tpi_verificacion_final` se creó desde `schema.sql` 
 - pedido con stock insuficiente: se rechaza sin crear un pedido parcial;
 - trigger: no permite que un producto inactivo ingrese a un detalle;
 - auditoría: registra los cambios de producto;
-- baja lógica: la vista deja de mostrar el cliente y el email puede reutilizarse para una nueva fila vigente.
+- baja lógica: las vistas dejan de mostrar cliente y producto; el email puede reutilizarse para una nueva fila vigente.
 
-El control final informó 2 procedimientos, 2 triggers y 2 vistas; la transacción de prueba cerró con `ROLLBACK`.
+El control final informó 3 procedimientos, 2 triggers y 4 vistas; la transacción de prueba cerró con `ROLLBACK`.
+
+Las mediciones de TP3, TP4 y TP5 se conservan como evidencia histórica anterior al borrado lógico. Las consultas operativas del modelo final están en `tpi/05_consultas_vigentes.sql` y usan las vistas vigentes; su salida y plan quedan en `evidencia/20260923_214500/07_consultas_vigentes.txt`.
 
 ## Transacciones, aislamiento y concurrencia
 

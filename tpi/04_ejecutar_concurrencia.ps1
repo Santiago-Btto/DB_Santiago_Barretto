@@ -1,11 +1,18 @@
 param(
     [string]$Database = 'food_store_tpi_verificacion',
     [string]$User = 'postgres',
-    [string]$LaboratorioId = 'TPI_CONC_20260923'
+    [string]$LaboratorioId = 'TPI_CONC_20260923',
+    [string]$PsqlPath = ''
 )
 
 $ErrorActionPreference = 'Stop'
-$Psql = 'C:\Program Files\PostgreSQL\18\bin\psql.exe'
+if ($PsqlPath) {
+    $Psql = $PsqlPath
+} else {
+    $psqlCommand = Get-Command psql -ErrorAction SilentlyContinue
+    $Psql = if ($psqlCommand) { $psqlCommand.Source } else { 'C:\Program Files\PostgreSQL\18\bin\psql.exe' }
+}
+if (-not (Test-Path -LiteralPath $Psql)) { throw "No se encontro psql. Agregarlo a PATH o usar -PsqlPath." }
 
 function Invoke-Pg([string]$Sql) {
     & $Psql -X -v ON_ERROR_STOP=1 -U $User -d $Database -Atqc $Sql

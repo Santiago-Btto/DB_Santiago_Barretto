@@ -1,0 +1,28 @@
+ id_cliente | nombre | apellido | email 
+------------+--------+----------+-------
+(0 rows)
+
+ id_producto | producto | categoria | precio_lista | stock 
+-------------+----------+-----------+--------------+-------
+(0 rows)
+
+ id_pedido | fecha | forma_pago | id_cliente | nombre | apellido 
+-----------+-------+------------+------------+--------+----------
+(0 rows)
+
+ id_pedido | producto | cantidad | precio_unitario | subtotal 
+-----------+----------+----------+-----------------+----------
+(0 rows)
+
+                                                                      QUERY PLAN                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ Index Scan using idx_tpi_cliente_vigente_apellido_nombre on cliente  (cost=0.14..8.15 rows=1 width=960) (actual time=0.003..0.003 rows=0.00 loops=1)
+   Filter: ((apellido)::text ~~ 'TP3%'::text)
+   Index Searches: 1
+   Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=9
+ Planning Time: 1.300 ms
+ Execution Time: 0.018 ms
+(8 rows)
+

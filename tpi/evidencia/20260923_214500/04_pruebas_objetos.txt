@@ -7,7 +7,7 @@ DO
 
        control        | procedimientos | triggers | vistas 
 ----------------------+----------------+----------+--------
- objetos_programables |              2 |        2 |      2
+ objetos_programables |              3 |        2 |      4
 (1 row)
 
 ROLLBACK

@@ -90,6 +90,11 @@ BEGIN
         RAISE EXCEPTION 'Fallo de trigger: admitio un producto inactivo';
     END IF;
 
+    CALL sp_tpi_baja_logica_producto(v_producto);
+    IF EXISTS (SELECT 1 FROM vw_tpi_productos_vigentes WHERE id_producto = v_producto) THEN
+        RAISE EXCEPTION 'Fallo de soft delete: producto aun visible en la vista';
+    END IF;
+
     CALL sp_tpi_baja_logica_cliente(v_cliente);
     IF EXISTS (SELECT 1 FROM vw_tpi_clientes_vigentes WHERE id_cliente = v_cliente) THEN
         RAISE EXCEPTION 'Fallo de soft delete: cliente aun visible en la vista';
@@ -108,8 +113,8 @@ SELECT 'PRUEBAS_TPI_OK' AS resultado,
        'CHECK, procedimiento, atomicidad, trigger, auditoria y soft delete validados' AS alcance;
 
 SELECT 'objetos_programables' AS control,
-       (SELECT count(*) FROM pg_proc WHERE proname IN ('sp_tpi_registrar_pedido', 'sp_tpi_baja_logica_cliente')) AS procedimientos,
+       (SELECT count(*) FROM pg_proc WHERE proname IN ('sp_tpi_registrar_pedido', 'sp_tpi_baja_logica_cliente', 'sp_tpi_baja_logica_producto')) AS procedimientos,
        (SELECT count(*) FROM pg_trigger WHERE tgname IN ('trg_tpi_detalle_producto_vigente', 'trg_tpi_auditoria_producto') AND NOT tgisinternal) AS triggers,
-       (SELECT count(*) FROM pg_views WHERE viewname IN ('vw_tpi_clientes_vigentes', 'vw_tpi_productos_vigentes')) AS vistas;
+       (SELECT count(*) FROM pg_views WHERE viewname IN ('vw_tpi_clientes_vigentes', 'vw_tpi_productos_vigentes', 'vw_tpi_pedidos_cliente_vigentes', 'vw_tpi_detalle_pedido_producto_vigente')) AS vistas;
 
 ROLLBACK;

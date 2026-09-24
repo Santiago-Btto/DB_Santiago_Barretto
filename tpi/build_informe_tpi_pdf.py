@@ -62,7 +62,7 @@ coverage = [
     [p("3. Normalizacion"), p("Dependencias funcionales y justificacion 3FN/BCNF.")],
     [p("4. DDL"), p("schema.sql y migracion idempotente tpi/01_migracion_modelo_final.sql.")],
     [p("5. DML y consultas"), p("JOIN, agregacion, subconsultas, GROUP BY/HAVING y RANK en TP3/TP4.")],
-    [p("6. Vistas y PL/pgSQL"), p("Vistas, materializada, 2 funciones y 2 procedimientos.")],
+    [p("6. Vistas y PL/pgSQL"), p("Vistas, materializada, 2 funciones y 3 procedimientos.")],
     [p("7. Reglas"), p("CHECK, UNIQUE, trigger de vigencia y trigger de auditoria.")],
     [p("8. Transacciones"), p("Atomicidad, COMMIT/ROLLBACK, aislamiento y bloqueo en dos sesiones.")],
     [p("9. Borrado logico"), p("deleted_at, indices parciales y vistas de entidades vigentes.")],
@@ -73,8 +73,8 @@ story += [p("2. Modelo y reglas de negocio", "H1TPI"),
           p("El modelo contiene cliente, categoria, producto, pedido y detalle_pedido. La PK compuesta de detalle_pedido preserva cantidad y precio historico. Las FK usan ON DELETE RESTRICT; cliente y producto incorporan deleted_at para preservar el historial sin devolver bajas en las nuevas vistas."),
           p("El esquema final agrega nombres no vacios, precios positivos, categoria unica, email unico entre clientes vigentes e indices parciales para las consultas filtradas por deleted_at. El rol sin login food_store_reporter solo recibe SELECT sobre las vistas de reporte."),
           p("3. Objetos programables y prueba atomica", "H1TPI"),
-          p("sp_tpi_registrar_pedido bloquea el producto, valida cliente y stock, descuenta unidades y crea pedido mas detalle. Ante stock insuficiente lanza excepcion sin dejar un pedido parcial. sp_tpi_baja_logica_cliente marca la baja. Los triggers impiden productos no vigentes en detalles y auditan cambios de producto."),
-          p("La prueba reversible finalizo con ROLLBACK y confirmo 2 procedimientos, 2 triggers y 2 vistas. Tambien comprobó los tres CHECK, la auditoria y el reuso de email posterior a una baja logica.")]
+          p("sp_tpi_registrar_pedido bloquea el producto, valida cliente y stock, descuenta unidades y crea pedido mas detalle. Ante stock insuficiente lanza excepcion sin dejar un pedido parcial. Los procedimientos de baja logica formalizan clientes y productos. Los triggers impiden productos no vigentes en detalles y auditan cambios de producto."),
+          p("La prueba reversible finalizo con ROLLBACK y confirmo 3 procedimientos, 2 triggers y 4 vistas. Tambien comprobó los tres CHECK, la auditoria y el reuso de email posterior a una baja logica.")]
 
 story += [p("4. Transacciones y concurrencia observadas", "H1TPI")]
 concurrency = [

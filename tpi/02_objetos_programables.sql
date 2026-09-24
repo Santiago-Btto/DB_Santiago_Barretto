@@ -116,6 +116,21 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE PROCEDURE sp_tpi_baja_logica_producto(p_id_producto BIGINT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE producto
+    SET activo = FALSE,
+        deleted_at = clock_timestamp()
+    WHERE id_producto = p_id_producto
+      AND deleted_at IS NULL;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'El producto % no existe o ya estaba dado de baja', p_id_producto;
+    END IF;
+END;
+$$;
+
 CREATE OR REPLACE VIEW vw_tpi_clientes_vigentes AS
 SELECT id_cliente, nombre, apellido, email
 FROM cliente
@@ -128,6 +143,21 @@ FROM producto p
 JOIN categoria c ON c.id_categoria = p.id_categoria
 WHERE p.activo AND p.deleted_at IS NULL AND c.activo;
 
+CREATE OR REPLACE VIEW vw_tpi_pedidos_cliente_vigentes AS
+SELECT ped.id_pedido, ped.fecha, ped.forma_pago,
+       cli.id_cliente, cli.nombre, cli.apellido, cli.email
+FROM pedido ped
+JOIN cliente cli ON cli.id_cliente = ped.id_cliente
+WHERE cli.deleted_at IS NULL;
+
+CREATE OR REPLACE VIEW vw_tpi_detalle_pedido_producto_vigente AS
+SELECT det.id_pedido, det.id_producto, prod.nombre AS producto,
+       det.cantidad, det.precio_unitario,
+       det.cantidad * det.precio_unitario AS subtotal
+FROM detalle_pedido det
+JOIN producto prod ON prod.id_producto = det.id_producto
+WHERE prod.activo AND prod.deleted_at IS NULL;
+
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'food_store_reporter') THEN
@@ -137,5 +167,7 @@ END;
 $$;
 
 GRANT USAGE ON SCHEMA public TO food_store_reporter;
-GRANT SELECT ON vw_tpi_clientes_vigentes, vw_tpi_productos_vigentes TO food_store_reporter;
+GRANT SELECT ON vw_tpi_clientes_vigentes, vw_tpi_productos_vigentes,
+    vw_tpi_pedidos_cliente_vigentes, vw_tpi_detalle_pedido_producto_vigente
+    TO food_store_reporter;
 REVOKE ALL ON TABLE cliente, producto FROM food_store_reporter;
