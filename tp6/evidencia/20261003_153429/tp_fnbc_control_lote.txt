@@ -1,0 +1,32 @@
+BEGIN
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+INSERT 0 2
+CREATE TABLE
+INSERT 0 3
+ responsable_control_id 
+------------------------
+(0 rows)
+
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+CREATE VIEW
+COMMIT
+       control        | diferencias 
+----------------------+-------------
+ original_menos_vista |           0
+ vista_menos_original |           0
+(2 rows)
+
+ lote_id | deposito_id | responsable_control_id 
+---------+-------------+------------------------
+     501 |          30 |                    801
+     502 |          30 |                    801
+     503 |          31 |                    802
+(3 rows)
+

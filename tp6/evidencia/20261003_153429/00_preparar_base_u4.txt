@@ -1,0 +1,15 @@
+BEGIN
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+UPDATE 200000
+ANALYZE
+ANALYZE
+ANALYZE
+ANALYZE
+COMMIT
+    base_preparada     | fecha_reporte | pedidos_hoy | detalles_hoy 
+-----------------------+---------------+-------------+--------------
+ food_store_tp_u4_fnbc | 2026-10-03    |         311 |          622
+(1 row)
+

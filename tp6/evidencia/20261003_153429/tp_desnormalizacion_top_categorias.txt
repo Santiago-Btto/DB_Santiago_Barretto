@@ -1,0 +1,172 @@
+BEGIN
+DROP TRIGGER
+psql:C:/Users/esteb/Desktop/faku/3r Semestre/BDII/U1/DB_Santiago_Barretto/tp6/tp_desnormalizacion_top_categorias.sql:7: NOTICE:  “trigger” «trg_tp_u4_refrescar_top_detalle» para la relación «detalle_pedido» no existe, omitiendo
+psql:C:/Users/esteb/Desktop/faku/3r Semestre/BDII/U1/DB_Santiago_Barretto/tp6/tp_desnormalizacion_top_categorias.sql:8: NOTICE:  “trigger” «trg_tp_u4_refrescar_top_pedido» para la relación «pedido» no existe, omitiendo
+DROP TRIGGER
+psql:C:/Users/esteb/Desktop/faku/3r Semestre/BDII/U1/DB_Santiago_Barretto/tp6/tp_desnormalizacion_top_categorias.sql:9: NOTICE:  “trigger” «trg_tp_u4_refrescar_top_producto» para la relación «producto» no existe, omitiendo
+DROP TRIGGER
+psql:C:/Users/esteb/Desktop/faku/3r Semestre/BDII/U1/DB_Santiago_Barretto/tp6/tp_desnormalizacion_top_categorias.sql:10: NOTICE:  “trigger” «trg_tp_u4_refrescar_top_categoria» para la relación «categoria» no existe, omitiendo
+DROP TRIGGER
+psql:C:/Users/esteb/Desktop/faku/3r Semestre/BDII/U1/DB_Santiago_Barretto/tp6/tp_desnormalizacion_top_categorias.sql:11: NOTICE:  no existe la función fn_tp_u4_refrescar_top_categorias(), omitiendo
+DROP FUNCTION
+psql:C:/Users/esteb/Desktop/faku/3r Semestre/BDII/U1/DB_Santiago_Barretto/tp6/tp_desnormalizacion_top_categorias.sql:12: NOTICE:  la vista materializada «mv_tp_u4_top_categorias_dia» no existe, omitiendo
+DROP MATERIALIZED VIEW
+SELECT 1168
+CREATE INDEX
+CREATE INDEX
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+CREATE TRIGGER
+COMMIT
+                                                                                            QUERY PLAN                                                                                            
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=11550.58..11550.59 rows=5 width=41) (actual time=45.764..49.763 rows=2.00 loops=1)
+   Output: c.nombre, (sum(dp.subtotal))
+   Buffers: shared hit=7803 read=136
+   ->  Sort  (cost=11550.58..11550.59 rows=5 width=41) (actual time=45.763..49.761 rows=2.00 loops=1)
+         Output: c.nombre, (sum(dp.subtotal))
+         Sort Key: (sum(dp.subtotal)) DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=7803 read=136
+         ->  Finalize GroupAggregate  (cost=11542.67..11550.52 rows=5 width=41) (actual time=45.755..49.755 rows=2.00 loops=1)
+               Output: c.nombre, sum(dp.subtotal)
+               Group Key: c.nombre
+               Buffers: shared hit=7803 read=136
+               ->  Gather Merge  (cost=11542.67..11550.37 rows=12 width=41) (actual time=45.725..49.747 rows=6.00 loops=1)
+                     Output: c.nombre, (PARTIAL sum(dp.subtotal))
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=7803 read=136
+                     ->  Partial GroupAggregate  (cost=10542.65..10548.96 rows=5 width=41) (actual time=27.671..27.689 rows=2.00 loops=3)
+                           Output: c.nombre, PARTIAL sum(dp.subtotal)
+                           Group Key: c.nombre
+                           Buffers: shared hit=7803 read=136
+                           Worker 0:  actual time=18.253..18.266 rows=2.00 loops=1
+                             Buffers: shared hit=1360 read=25
+                           Worker 1:  actual time=19.411..19.425 rows=2.00 loops=1
+                             Buffers: shared hit=1450 read=35
+                           ->  Sort  (cost=10542.65..10544.73 rows=833 width=14) (actual time=27.651..27.660 rows=207.33 loops=3)
+                                 Output: c.nombre, dp.subtotal
+                                 Sort Key: c.nombre
+                                 Sort Method: quicksort  Memory: 34kB
+                                 Buffers: shared hit=7803 read=136
+                                 Worker 0:  actual time=18.238..18.245 rows=154.00 loops=1
+                                   Sort Method: quicksort  Memory: 29kB
+                                   Buffers: shared hit=1360 read=25
+                                 Worker 1:  actual time=19.392..19.399 rows=173.00 loops=1
+                                   Sort Method: quicksort  Memory: 30kB
+                                   Buffers: shared hit=1450 read=35
+                                 ->  Hash Join  (cost=5009.58..10502.24 rows=833 width=14) (actual time=8.820..27.593 rows=207.33 loops=3)
+                                       Output: c.nombre, dp.subtotal
+                                       Inner Unique: true
+                                       Hash Cond: (pr.id_categoria = c.id_categoria)
+                                       Buffers: shared hit=7787 read=136
+                                       Worker 0:  actual time=0.943..18.189 rows=154.00 loops=1
+                                         Buffers: shared hit=1352 read=25
+                                       Worker 1:  actual time=0.888..19.330 rows=173.00 loops=1
+                                         Buffers: shared hit=1442 read=35
+                                       ->  Nested Loop  (cost=5008.46..10497.08 rows=833 width=13) (actual time=8.585..27.312 rows=207.33 loops=3)
+                                             Output: dp.subtotal, pr.id_categoria
+                                             Inner Unique: true
+                                             Buffers: shared hit=7784 read=136
+                                             Worker 0:  actual time=0.620..17.831 rows=154.00 loops=1
+                                               Buffers: shared hit=1351 read=25
+                                             Worker 1:  actual time=0.526..18.927 rows=173.00 loops=1
+                                               Buffers: shared hit=1441 read=35
+                                             ->  Parallel Hash Join  (cost=5008.17..10222.35 rows=833 width=13) (actual time=8.329..25.806 rows=207.33 loops=3)
+                                                   Output: dp.subtotal, dp.id_producto
+                                                   Inner Unique: true
+                                                   Hash Cond: (dp.id_pedido = ped.id_pedido)
+                                                   Buffers: shared hit=6052
+                                                   Worker 0:  actual time=0.273..16.464 rows=154.00 loops=1
+                                                     Buffers: shared hit=913
+                                                   Worker 1:  actual time=0.146..17.275 rows=173.00 loops=1
+                                                     Buffers: shared hit=956
+                                                   ->  Parallel Seq Scan on public.detalle_pedido dp  (cost=0.00..4776.67 rows=166667 width=21) (actual time=0.008..9.916 rows=133333.33 loops=3)
+                                                         Output: dp.id_pedido, dp.id_producto, dp.cantidad, dp.precio_unitario, dp.eliminado, dp.subtotal
+                                                         Filter: (NOT dp.eliminado)
+                                                         Buffers: shared hit=3110
+                                                         Worker 0:  actual time=0.009..9.361 rows=118534.00 loops=1
+                                                           Buffers: shared hit=913
+                                                         Worker 1:  actual time=0.010..9.953 rows=124218.00 loops=1
+                                                           Buffers: shared hit=956
+                                                   ->  Parallel Hash  (cost=5000.82..5000.82 rows=588 width=8) (actual time=8.156..8.156 rows=103.67 loops=3)
+                                                         Output: ped.id_pedido
+                                                         Buckets: 1024  Batches: 1  Memory Usage: 40kB
+                                                         Buffers: shared hit=2942
+                                                         Worker 0:  actual time=0.010..0.010 rows=0.00 loops=1
+                                                         Worker 1:  actual time=0.011..0.011 rows=0.00 loops=1
+                                                         ->  Parallel Seq Scan on public.pedido ped  (cost=0.00..5000.82 rows=588 width=8) (actual time=0.042..24.369 rows=311.00 loops=1)
+                                                               Output: ped.id_pedido
+                                                               Filter: ((NOT ped.eliminado) AND ((ped.fecha)::date = CURRENT_DATE))
+                                                               Rows Removed by Filter: 199689
+                                                               Buffers: shared hit=2942
+                                             ->  Index Scan using producto_pkey on public.producto pr  (cost=0.29..0.33 rows=1 width=16) (actual time=0.007..0.007 rows=1.00 loops=622)
+                                                   Output: pr.id_producto, pr.nombre, pr.descripcion, pr.precio_lista, pr.stock, pr.activo, pr.id_categoria
+                                                   Index Cond: (pr.id_producto = dp.id_producto)
+                                                   Index Searches: 622
+                                                   Buffers: shared hit=1732 read=136
+                                                   Worker 0:  actual time=0.008..0.008 rows=1.00 loops=154
+                                                     Buffers: shared hit=438 read=25
+                                                   Worker 1:  actual time=0.009..0.009 rows=1.00 loops=173
+                                                     Buffers: shared hit=485 read=35
+                                       ->  Hash  (cost=1.05..1.05 rows=5 width=17) (actual time=0.229..0.229 rows=5.00 loops=3)
+                                             Output: c.nombre, c.id_categoria
+                                             Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                             Buffers: shared hit=3
+                                             Worker 0:  actual time=0.316..0.316 rows=5.00 loops=1
+                                               Buffers: shared hit=1
+                                             Worker 1:  actual time=0.355..0.355 rows=5.00 loops=1
+                                               Buffers: shared hit=1
+                                             ->  Seq Scan on public.categoria c  (cost=0.00..1.05 rows=5 width=17) (actual time=0.221..0.222 rows=5.00 loops=3)
+                                                   Output: c.nombre, c.id_categoria
+                                                   Buffers: shared hit=3
+                                                   Worker 0:  actual time=0.307..0.308 rows=5.00 loops=1
+                                                     Buffers: shared hit=1
+                                                   Worker 1:  actual time=0.346..0.347 rows=5.00 loops=1
+                                                     Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=83
+ Planning Time: 2.326 ms
+ Execution Time: 49.870 ms
+(109 rows)
+
+                                                                          QUERY PLAN                                                                          
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=17.47..17.48 rows=5 width=250) (actual time=0.322..0.323 rows=2.00 loops=1)
+   Output: categoria, total_vendido
+   Buffers: shared hit=1 read=2
+   ->  Sort  (cost=17.47..17.49 rows=6 width=250) (actual time=0.322..0.322 rows=2.00 loops=1)
+         Output: categoria, total_vendido
+         Sort Key: mv_tp_u4_top_categorias_dia.total_vendido DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=1 read=2
+         ->  Bitmap Heap Scan on public.mv_tp_u4_top_categorias_dia  (cost=4.33..17.39 rows=6 width=250) (actual time=0.311..0.312 rows=2.00 loops=1)
+               Output: categoria, total_vendido
+               Recheck Cond: (mv_tp_u4_top_categorias_dia.fecha = CURRENT_DATE)
+               Heap Blocks: exact=1
+               Buffers: shared hit=1 read=2
+               ->  Bitmap Index Scan on ix_mv_tp_u4_top_categorias_fecha_monto  (cost=0.00..4.33 rows=6 width=0) (actual time=0.047..0.047 rows=2.00 loops=1)
+                     Index Cond: (mv_tp_u4_top_categorias_dia.fecha = CURRENT_DATE)
+                     Index Searches: 1
+                     Buffers: shared read=2
+ Planning:
+   Buffers: shared hit=36 read=2
+ Planning Time: 2.181 ms
+ Execution Time: 0.344 ms
+(21 rows)
+
+ fecha | id_categoria | categoria_fuente | categoria_materializada | total_fuente | total_materializado 
+-------+--------------+------------------+-------------------------+--------------+---------------------
+(0 rows)
+
+BEGIN
+INSERT 0 1
+         control          | diferencias 
+--------------------------+-------------
+ auditoria_durante_prueba |           0
+(1 row)
+
+ROLLBACK
