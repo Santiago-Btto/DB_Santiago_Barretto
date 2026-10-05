@@ -1,0 +1,53 @@
+DO
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+ALTER ROLE
+GRANT ROLE
+GRANT ROLE
+psql:sql/roles.sql:44: NOTICE:  el rol «app_web» ya recibió membresía en el rol «rol_app_lectura» por parte del rol «postgres»
+psql:sql/roles.sql:44: NOTICE:  el rol «app_web» ya recibió membresía en el rol «rol_app_escritura» por parte del rol «postgres»
+psql:sql/roles.sql:45: NOTICE:  el rol «soporte_operador» ya recibió membresía en el rol «rol_soporte» por parte del rol «postgres»
+REVOKE
+GRANT
+REVOKE
+REVOKE
+REVOKE
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+REVOKE
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+GRANT
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+      rolname      | rolcanlogin | rolinherit | rolsuper | rolcreaterole 
+-------------------+-------------+------------+----------+---------------
+ admin_datos       | t           | f          | f        | f
+ app_web           | t           | f          | f        | f
+ rol_app_escritura | f           | t          | f        | f
+ rol_app_lectura   | f           | t          | f        | f
+ rol_auditoria     | f           | t          | f        | f
+ rol_reportes      | f           | t          | f        | f
+ rol_soporte       | f           | t          | f        | f
+ soporte_operador  | t           | f          | f        | f
+(8 rows)
+

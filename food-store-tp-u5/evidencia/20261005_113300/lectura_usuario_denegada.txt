@@ -1,0 +1,2 @@
+ERROR:  permiso denegado a la tabla usuario
+SET

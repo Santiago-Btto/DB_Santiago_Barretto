@@ -1,0 +1,48 @@
+      grantee      |       table_name       | privilege_type 
+-------------------+------------------------+----------------
+ admin_datos       | auditoria_evento       | DELETE
+ admin_datos       | auditoria_evento       | INSERT
+ admin_datos       | auditoria_evento       | SELECT
+ admin_datos       | auditoria_evento       | UPDATE
+ admin_datos       | usuario                | DELETE
+ rol_app_escritura | detalle_pedido         | INSERT
+ rol_app_escritura | detalle_pedido         | UPDATE
+ rol_app_escritura | pedido                 | INSERT
+ rol_app_escritura | pedido                 | UPDATE
+ rol_app_lectura   | categoria              | SELECT
+ rol_app_lectura   | producto               | SELECT
+ rol_auditoria     | auditoria_evento       | SELECT
+ rol_reportes      | vw_u5_ventas_categoria | SELECT
+(13 rows)
+
+   grantee   | table_name |  column_name  | privilege_type 
+-------------+------------+---------------+----------------
+ admin_datos | usuario    | apellido      | INSERT
+ admin_datos | usuario    | apellido      | SELECT
+ admin_datos | usuario    | apellido      | UPDATE
+ admin_datos | usuario    | email         | INSERT
+ admin_datos | usuario    | email         | SELECT
+ admin_datos | usuario    | email         | UPDATE
+ admin_datos | usuario    | fecha_alta    | INSERT
+ admin_datos | usuario    | fecha_alta    | SELECT
+ admin_datos | usuario    | fecha_alta    | UPDATE
+ admin_datos | usuario    | id_usuario    | SELECT
+ admin_datos | usuario    | nombre        | INSERT
+ admin_datos | usuario    | nombre        | SELECT
+ admin_datos | usuario    | nombre        | UPDATE
+ admin_datos | usuario    | password_hash | INSERT
+ admin_datos | usuario    | rol_negocio   | INSERT
+ admin_datos | usuario    | rol_negocio   | SELECT
+ admin_datos | usuario    | rol_negocio   | UPDATE
+ rol_soporte | usuario    | apellido      | SELECT
+ rol_soporte | usuario    | id_usuario    | SELECT
+ rol_soporte | usuario    | nombre        | SELECT
+(20 rows)
+
+     miembro      |   rol_otorgado    
+------------------+-------------------
+ app_web          | rol_app_escritura
+ app_web          | rol_app_lectura
+ soporte_operador | rol_soporte
+(3 rows)
+
