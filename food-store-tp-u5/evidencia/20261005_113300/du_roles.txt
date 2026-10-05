@@ -1,0 +1,14 @@
+                                  List of roles
+      Role name      |                         Attributes                         
+---------------------+------------------------------------------------------------
+ admin_datos         | No inheritance
+ app_web             | No inheritance
+ food_store_reporter | Cannot login
+ postgres            | Superuser, Create role, Create DB, Replication, Bypass RLS
+ rol_app_escritura   | Cannot login
+ rol_app_lectura     | Cannot login
+ rol_auditoria       | Cannot login
+ rol_reportes        | Cannot login
+ rol_soporte         | Cannot login
+ soporte_operador    | No inheritance
+

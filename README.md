@@ -14,6 +14,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | TP4 - Unidad 2 Semana 4 | Reportes analiticos asistidos por IA | Consultas con joins, agregacion y ventana; lectura critica de planes; equivalencia formal; competencia y DUIA. | Ejecutado y documentado con planes reales en `tp4/evidencia/`. |
 | TP5 - Unidad 3 Semana 1 | Índices, vistas y vistas materializadas | Plan de indexado medido, costo de escritura, vistas de reportes, seguridad por mínimo privilegio y resumen materializado. | Ejecutado sobre copias aisladas; mediciones reales en `tp5/informe_mediciones.md`. |
 | TP6 - Unidad 4 | FNBC y desnormalización controlada | Descomposición sin pérdida de ControlLoteAlmacen, vista de compatibilidad, vista materializada diaria con sincronización por triggers y auditoría. | Ejecutado en `food_store_tp_u4_fnbc`; evidencia real en `tp6/evidencia/20261003_153429/`. |
+| TP Unidad 5 | Administración y seguridad | Roles de mínimo privilegio, auditoría nativa, simulacro local, anonimización y bitácora de IA. | Ejecutado en `food_store_tp_u5_seguridad`; evidencia real en `food-store-tp-u5/evidencia/20261005_113300/`. |
 | TPI - Primera entrega parcial | Integración Unidades 1, 2 y 3 | Modelo ER, mapeo relacional, 3FN/BCNF, migración final, PL/pgSQL, triggers, borrado lógico y evidencia de concurrencia. | Ejecutado en `food_store_tpi_verificacion_final`; evidencia real en `tpi/evidencia/20260923_214500/`. |
 
 ## Estructura
@@ -28,6 +29,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 - `tp4/`: scripts PostgreSQL y DBeaver, planes antes/despues, resultados, DUIA y PDF final de TP4.
 - `tp5/`: plan de índices, vistas, materializada, especificaciones, DUIA y scripts PostgreSQL/DBeaver de TP5.
 - `tp6/`: resolución de FNBC, desnormalización controlada, informe final y evidencia real de PostgreSQL para la Unidad 4.
+- `food-store-tp-u5/`: resolución de Administración y Seguridad, scripts, documentación, bitácora y evidencia del TP de Unidad 5.
 - `tpi/`: scripts de integración, modelo ER, normalización, checklist, informe técnico y evidencia del TPI.
 
 ## Ejecucion segura
