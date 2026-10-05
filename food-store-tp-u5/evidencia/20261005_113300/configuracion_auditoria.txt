@@ -1,0 +1,9 @@
+        name        |                 setting                 |       source       
+--------------------+-----------------------------------------+--------------------
+ log_connections    | on                                      | configuration file
+ log_disconnections | on                                      | configuration file
+ log_line_prefix    | %m [%p] user=%u,db=%d,app=%a,client=%r  | configuration file
+ log_statement      | all                                     | configuration file
+ logging_collector  | on                                      | configuration file
+(5 rows)
+

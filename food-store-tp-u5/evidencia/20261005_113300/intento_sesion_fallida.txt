@@ -1,0 +1,1 @@
+psql: error: connection to server at "localhost" (::1), port 5432 failed: FATAL:  no existe el rol �intento_invalido_tp_u5�

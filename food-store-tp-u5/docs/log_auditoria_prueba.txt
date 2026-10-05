@@ -1,0 +1,16 @@
+Fragmento capturado del log nativo de PostgreSQL - 2026-10-05
+Base: food_store_tp_u5_seguridad
+
+2026-10-05 11:30:44.793 -03 [9512] user=postgres,db=food_store_tp_u5_seguridad,app=tp_u5_auditoria_postgres,client=::1(...) LOG: sentencia: SELECT count(*) AS lectura_catalogo FROM producto;
+2026-10-05 11:30:44.807 -03 [9512] user=postgres,db=food_store_tp_u5_seguridad,app=tp_u5_auditoria_postgres,client=::1(...) LOG: sentencia: BEGIN;
+2026-10-05 11:30:44.807 -03 [9512] user=postgres,db=food_store_tp_u5_seguridad,app=tp_u5_auditoria_postgres,client=::1(...) LOG: sentencia: INSERT INTO auditoria_evento (...);
+2026-10-05 11:30:44.809 -03 [9512] user=postgres,db=food_store_tp_u5_seguridad,app=tp_u5_auditoria_postgres,client=::1(...) LOG: sentencia: UPDATE auditoria_evento SET detalle = 'actualizacion reversible de prueba' ...;
+2026-10-05 11:30:44.810 -03 [9512] user=postgres,db=food_store_tp_u5_seguridad,app=tp_u5_auditoria_postgres,client=::1(...) LOG: sentencia: ROLLBACK;
+
+2026-10-05 11:32:47.886 -03 [5164] user=[desconocido],db=[desconocido],app=[desconocido],client=::1(...) LOG: conexion recibida
+2026-10-05 11:32:47.888 -03 [5164] user=intento_invalido_tp_u5,db=food_store_tp_u5_seguridad,app=[desconocido],client=::1(...) FATAL: no existe el rol intento_invalido_tp_u5
+
+2026-10-05 11:32:48.137 -03 [24768] user=app_web,db=food_store_tp_u5_seguridad,app=psql,client=::1(...) LOG: sentencia: SET ROLE rol_app_lectura; SELECT email FROM usuario LIMIT 1;
+2026-10-05 11:32:48.143 -03 [24768] user=app_web,db=food_store_tp_u5_seguridad,app=psql,client=::1(...) ERROR: permiso denegado a la tabla usuario
+
+Nota: el archivo completo permanece en la carpeta de logs local del servidor y no se versiona. El entorno heredado usa autenticacion `trust` para conexiones locales; por ello, el evento FATAL se genero con un rol inexistente y las credenciales de aplicacion se probaron mediante `fn_autenticar`. En una instalacion no academica se debe migrar pg_hba.conf a `scram-sha-256` antes de considerar seguro el acceso por red.
