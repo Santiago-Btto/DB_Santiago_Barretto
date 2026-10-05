@@ -1,0 +1,12 @@
+Fragmento anonimizado entregado al asistente de IA para reconstruccion
+Base: food_store_tp_u5_seguridad
+
+2026-10-05 11:32:48.386 -03 user=rol_soporte_demo,db=food_store_tp_u5_seguridad,app=tp_u5_simulacro,client=LOOPBACK LOG: SELECT fn_autenticar('usuario_anon_001@ejemplo.invalid', '[REDACTADO]') AS intento_1;
+2026-10-05 11:32:48.400 -03 user=rol_soporte_demo,db=food_store_tp_u5_seguridad,app=tp_u5_simulacro,client=LOOPBACK LOG: SELECT fn_autenticar('usuario_anon_001@ejemplo.invalid', '[REDACTADO]') AS intento_2;
+2026-10-05 11:32:48.404 -03 user=rol_soporte_demo,db=food_store_tp_u5_seguridad,app=tp_u5_simulacro,client=LOOPBACK LOG: SELECT fn_autenticar('usuario_anon_001@ejemplo.invalid', '[REDACTADO]') AS intento_3;
+2026-10-05 11:32:48.409 -03 user=rol_soporte_demo,db=food_store_tp_u5_seguridad,app=tp_u5_simulacro,client=LOOPBACK LOG: SELECT fn_autenticar('usuario_anon_001@ejemplo.invalid', '[REDACTADO]') AS intento_4;
+2026-10-05 11:32:48.413 -03 user=rol_soporte_demo,db=food_store_tp_u5_seguridad,app=tp_u5_simulacro,client=LOOPBACK LOG: SELECT count(*) FROM (SELECT id_usuario, nombre, apellido FROM usuario ORDER BY id_usuario LIMIT 1000) AS lectura;
+2026-10-05 11:32:48.415 -03 user=rol_soporte_demo,db=food_store_tp_u5_seguridad,app=tp_u5_simulacro,client=LOOPBACK LOG: DO $$ EXECUTE 'GRANT admin_datos TO rol_soporte_demo'; ... $$;
+2026-10-05 11:32:48.416 -03 user=rol_soporte_demo,db=food_store_tp_u5_seguridad,app=tp_u5_simulacro,client=LOOPBACK LOG: RESET ROLE;
+
+Se reemplazaron el email, la cuenta de soporte, el puerto y las claves de laboratorio. No se incluyeron nombres, emails, hashes, contrasenas ni rutas reales del servidor.

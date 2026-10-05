@@ -1,0 +1,30 @@
+SET
+SET
+ intento_1 
+-----------
+ f
+(1 row)
+
+ intento_2 
+-----------
+ f
+(1 row)
+
+ intento_3 
+-----------
+ f
+(1 row)
+
+ intento_4 
+-----------
+ t
+(1 row)
+
+ filas_lectura_masiva 
+----------------------
+                 1000
+(1 row)
+
+DO
+psql:sql/simulacro_incidente.sql:35: NOTICE:  ESCALAMIENTO_BLOQUEADO: soporte_operador no puede otorgarse admin_datos
+RESET
