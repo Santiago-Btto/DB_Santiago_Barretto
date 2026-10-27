@@ -1,4 +1,5 @@
 backups/
+tp8/logs/
 *.backup
 *.dump
 *.sql~

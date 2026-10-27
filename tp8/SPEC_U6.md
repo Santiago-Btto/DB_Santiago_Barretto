@@ -2,7 +2,7 @@
 
 ## Alcance y entorno
 
-PostgreSQL 16 o superior, laboratorio local. La base principal se llama `foodstore` y se obtiene como copia de la carga existente `food_store_tp5_base`. El ensayo se restaura exclusivamente en la base nueva `foodstore_restore_test`. Ningún script debe borrar, reemplazar ni alterar la base principal; si la base de prueba ya existe, el ensayo se detiene. Nunca guardar contraseñas en scripts, logs, evidencias o Git. Usar autenticación local configurada por el usuario (`.pgpass` o prompt interactivo cuando corresponda).
+PostgreSQL 16 o superior, laboratorio local. La base principal se llama `foodstore` y se obtiene como copia de la carga existente `food_store_tp5_base`. El ensayo se restaura exclusivamente en la base nueva `foodstore_restore_test`. Ningún script debe borrar, reemplazar ni alterar la base principal; si la base de prueba ya existe, el ensayo se detiene. Nunca guardar contraseñas en scripts, logs, evidencias o Git. Para una tarea programada, configurar autenticación externa al script (por ejemplo, `.pgpass`).
 
 ## Plan y criterio de éxito
 
