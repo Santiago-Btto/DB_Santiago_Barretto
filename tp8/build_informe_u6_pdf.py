@@ -74,7 +74,7 @@ def build() -> None:
     light = colors.HexColor("#F2F5F6")
     ink = colors.HexColor("#25343B")
 
-    title = ParagraphStyle("title", fontName="Arial-Bold", fontSize=17.5, leading=21,
+    title = ParagraphStyle("title", fontName="Arial-Bold", fontSize=17, leading=21,
                            textColor=navy, alignment=TA_CENTER, spaceAfter=3)
     subtitle = ParagraphStyle("subtitle", fontName="Arial", fontSize=9, leading=12,
                               textColor=colors.HexColor("#4C636B"), alignment=TA_CENTER)
@@ -92,13 +92,13 @@ def build() -> None:
         author="Santiago Barretto",
     )
     story = [
-        paragraph("TP8 · Unidad 6 — Mantenimiento y recuperación", title),
-        paragraph("Food Store | Santiago Barretto | 27/10/2026 | PostgreSQL 18.4", subtitle),
+        paragraph("Informe breve · TP8 — Unidad 6", title),
+        paragraph("Mantenimiento y recuperación de Food Store | Santiago Barretto | 27/10/2026", subtitle),
         Spacer(1, 5 * mm),
     ]
 
     summary = Table([
-        [paragraph("Base principal", cell_bold), paragraph("foodstore (copia de food_store_tp5_base)", cell),
+        [paragraph("Base principal", cell_bold), paragraph("foodstore (copia de laboratorio)", cell),
          paragraph("Destino", cell_bold), paragraph("foodstore_restore_test", cell)],
         [paragraph("Respaldo", cell_bold),
          paragraph(f"{started:%d/%m/%Y %H:%M:%S} a {finished:%H:%M:%S} (-03:00)", cell),
@@ -116,7 +116,14 @@ def build() -> None:
     ]))
     story.append(summary)
 
-    story.append(paragraph("Recuperación contra reloj", section))
+    story.append(paragraph("Trabajo realizado", section))
+    story.append(paragraph(
+        "Se revisaron el tamaño, las conexiones, las tablas y las consultas activas. Como la copia "
+        "no tenía estadísticas ANALYZE, se ejecutó un mantenimiento condicional y se comprobó que "
+        "una segunda pasada no necesitaba repetirlo. Luego se generó un respaldo custom, se verificó "
+        "su integridad y se restauró en una base de prueba independiente.", body))
+
+    story.append(paragraph("Resultados del simulacro", section))
     recovery = Table([
         [paragraph("Métrica", cell_bold), paragraph("Meta del laboratorio", cell_bold),
          paragraph("Resultado observado", cell_bold)],
@@ -134,9 +141,8 @@ def build() -> None:
     ]))
     story.append(recovery)
     story.append(paragraph(
-        "El RPO es la edad conservadora del respaldo al iniciar el simulacro; indica exposición "
-        "potencial, no pérdida real demostrada. El RTO se midió desde justo antes de crear la base "
-        "de prueba hasta terminar las validaciones.", body))
+        "RPO: edad del respaldo al iniciar la prueba, como exposición potencial. RTO: desde antes "
+        "de crear la base de restauración hasta finalizar las validaciones.", body))
 
     story.append(paragraph("Validación de la restauración", section))
     rows = [[paragraph("Tabla / control", cell_bold), paragraph("Antes del respaldo", cell_bold),
@@ -157,24 +163,18 @@ def build() -> None:
     ]))
     story.append(validation)
 
-    story.append(paragraph("Monitoreo, problema y mejora", section))
-    story.append(paragraph(
-        "Salud: base de 150 MB, actividad de conexiones, estado de tablas y consultas activas "
-        "registrados. Las cinco tablas carecían de estadísticas ANALYZE en la copia; se ejecutó "
-        "ANALYZE condicional. En la segunda pasada no hizo falta repetirlo. No se usó VACUUM FULL.", body))
+    story.append(paragraph("Problema encontrado y mejora", section))
     story.append(paragraph(
         "Problema real: la guía usa producto.precio, pero el esquema tiene producto.precio_lista; "
-        "la consulta inicial falló y se corrigió. También se corrigió la codificación de los logs "
-        "en PowerShell 5.1 y se repitió la restauración. Mejora: respaldos diarios en un segundo "
-        "almacenamiento, con retención, hash y restauración semanal programada.", body))
+        "la consulta inicial falló y se corrigió. También se ajustó la codificación de los logs y "
+        "se repitió la restauración. Como mejora, se propone conservar copias diarias en otro "
+        "almacenamiento y programar una restauración de prueba semanal.", body))
 
-    story.append(paragraph("Asistencia y trazabilidad", section))
+    story.append(paragraph("Asistencia y evidencia", section))
     story.append(paragraph(
-        "OpenCode propuso un borrador bajo SPEC_U6.md. Se corrigieron nombres de tablas, comparación "
-        "contra el manifiesto previo al dump, cálculo de RPO y controles lógicos; se aceptó sólo "
-        "tras probar pg_dump, pg_restore y psql. Evidencia: tp8/evidencia/20261027_091130/ "
-        "(manifiesto, logs y siete validaciones). El dump no se publica y ningún script contiene "
-        "contraseñas.", small))
+        "OpenCode propuso un borrador. Se revisaron nombres, conteos previos y mediciones antes "
+        "de aceptar los scripts. La evidencia real está en tp8/evidencia/20261027_091130/. "
+        "El dump no se publica y los scripts no contienen contraseñas.", small))
 
     def footer(canvas, _doc):
         canvas.saveState()

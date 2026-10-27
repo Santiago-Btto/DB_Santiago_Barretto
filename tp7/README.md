@@ -1,4 +1,4 @@
-# Food Store TP Unidad 5
+# TP7 - Unidad 5: administración y seguridad de Food Store
 
 Resolucion de administracion y seguridad sobre la copia aislada `food_store_tp_u5_seguridad`. Se partió de `food_store_tp5_base`, que conserva la carga poblada, y no se modificaron `practica_bd2`, `food_store_tp_u4_fnbc` ni las bases de entregas anteriores.
 
