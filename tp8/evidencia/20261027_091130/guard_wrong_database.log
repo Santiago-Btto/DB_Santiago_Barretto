@@ -1,0 +1,3 @@
+psql:tp8/maintenance.sql:9: ERROR:  Conectar a foodstore antes de ejecutar maintenance.sql
+CONTEXT:  función PL/pgSQL inline_code_block en la línea 4 en RAISE
+exit_code=3

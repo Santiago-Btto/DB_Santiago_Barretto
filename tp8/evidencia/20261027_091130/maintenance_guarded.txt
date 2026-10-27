@@ -1,0 +1,30 @@
+DO
+     tabla      | n_live_tup | n_dead_tup | n_mod_since_analyze | last_vacuum | last_autovacuum |         last_analyze          | last_autoanalyze |          decision           
+----------------+------------+------------+---------------------+-------------+-----------------+-------------------------------+------------------+-----------------------------
+ categoria      |          5 |          0 |                   0 |             |                 | 2026-10-27 09:11:30.836812-03 |                  | sin accion manual necesaria
+ cliente        |      20000 |          0 |                   0 |             |                 | 2026-10-27 09:11:30.835004-03 |                  | sin accion manual necesaria
+ detalle_pedido |     400000 |       1800 |                   0 |             |                 | 2026-10-27 09:11:31.347645-03 |                  | sin accion manual necesaria
+ pedido         |     200000 |          0 |                   0 |             |                 | 2026-10-27 09:11:31.285212-03 |                  | sin accion manual necesaria
+ producto       |      50000 |          0 |                   0 |             |                 | 2026-10-27 09:11:31.240368-03 |                  | sin accion manual necesaria
+(5 rows)
+
+DO
+psql:tp8/maintenance.sql:45: NOTICE:  Sin ANALYZE manual para public.cliente: estadísticas suficientes
+psql:tp8/maintenance.sql:45: NOTICE:  Sin ANALYZE manual para public.categoria: estadísticas suficientes
+psql:tp8/maintenance.sql:45: NOTICE:  Sin ANALYZE manual para public.producto: estadísticas suficientes
+psql:tp8/maintenance.sql:45: NOTICE:  Sin ANALYZE manual para public.pedido: estadísticas suficientes
+psql:tp8/maintenance.sql:45: NOTICE:  Sin ANALYZE manual para public.detalle_pedido: estadísticas suficientes
+ pg_stat_clear_snapshot 
+------------------------
+ 
+(1 row)
+
+     tabla      | n_live_tup | n_dead_tup | n_mod_since_analyze |         last_analyze          | last_autoanalyze 
+----------------+------------+------------+---------------------+-------------------------------+------------------
+ categoria      |          5 |          0 |                   0 | 2026-10-27 09:11:30.836812-03 | 
+ cliente        |      20000 |          0 |                   0 | 2026-10-27 09:11:30.835004-03 | 
+ detalle_pedido |     400000 |       1800 |                   0 | 2026-10-27 09:11:31.347645-03 | 
+ pedido         |     200000 |          0 |                   0 | 2026-10-27 09:11:31.285212-03 | 
+ producto       |      50000 |          0 |                   0 | 2026-10-27 09:11:31.240368-03 | 
+(5 rows)
+

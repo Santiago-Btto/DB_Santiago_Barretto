@@ -1,5 +1,13 @@
 -- Ejecutar conectado a foodstore. Revisión previa y ANALYZE condicional.
 -- No se ejecuta VACUUM FULL ni se modifica el contenido de las tablas.
+DO $guard$
+BEGIN
+  IF current_database() <> 'foodstore' THEN
+    RAISE EXCEPTION 'Conectar a foodstore antes de ejecutar maintenance.sql';
+  END IF;
+END
+$guard$;
+
 SELECT relname AS tabla, n_live_tup, n_dead_tup, n_mod_since_analyze,
        last_vacuum, last_autovacuum, last_analyze, last_autoanalyze,
        CASE

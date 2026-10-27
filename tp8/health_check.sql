@@ -1,4 +1,12 @@
 -- Ejecutar conectado a foodstore. Lecturas sin cambios de datos.
+DO $guard$
+BEGIN
+  IF current_database() <> 'foodstore' THEN
+    RAISE EXCEPTION 'Conectar a foodstore antes de ejecutar health_check.sql';
+  END IF;
+END
+$guard$;
+
 SELECT current_database() AS base, clock_timestamp() AS revisado_en,
        current_setting('server_version') AS version_postgresql,
        pg_size_pretty(pg_database_size(current_database())) AS tamano;

@@ -15,6 +15,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | TP5 - Unidad 3 Semana 1 | Índices, vistas y vistas materializadas | Plan de indexado medido, costo de escritura, vistas de reportes, seguridad por mínimo privilegio y resumen materializado. | Ejecutado sobre copias aisladas; mediciones reales en `tp5/informe_mediciones.md`. |
 | TP6 - Unidad 4 | FNBC y desnormalización controlada | Descomposición sin pérdida de ControlLoteAlmacen, vista de compatibilidad, vista materializada diaria con sincronización por triggers y auditoría. | Ejecutado en `food_store_tp_u4_fnbc`; evidencia real en `tp6/evidencia/20261003_153429/`. |
 | TP7 - Unidad 5 | Administración y seguridad | Roles de mínimo privilegio, auditoría nativa, simulacro local, anonimización y bitácora de IA. | Ejecutado en `food_store_tp_u5_seguridad`; evidencia real en `food-store-tp-u5/evidencia/20261005_113300/`. |
+| TP8 - Unidad 6 | Mantenimiento, respaldo y recuperación | Plan de mantenimiento, chequeo de salud, `ANALYZE` condicional, respaldo custom con SHA-256 y restauración medida con RPO/RTO. | Ejecutado sobre `foodstore` y `foodstore_restore_test`; evidencia real en `tp8/evidencia/20261027_091130/`. |
 | TPI - Primera entrega parcial | Integración Unidades 1, 2 y 3 | Modelo ER, mapeo relacional, 3FN/BCNF, migración final, PL/pgSQL, triggers, borrado lógico y evidencia de concurrencia. | Ejecutado en `food_store_tpi_verificacion_final`; evidencia real en `tpi/evidencia/20260923_214500/`. |
 
 ## Estructura
@@ -30,6 +31,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 - `tp5/`: plan de índices, vistas, materializada, especificaciones, DUIA y scripts PostgreSQL/DBeaver de TP5.
 - `tp6/`: resolución de FNBC, desnormalización controlada, informe final y evidencia real de PostgreSQL para la Unidad 4.
 - `food-store-tp-u5/`: resolución de Administración y Seguridad, scripts, documentación, bitácora y evidencia del TP de Unidad 5.
+- `tp8/`: especificación, scripts de respaldo/monitoreo/restauración, revisión de OpenCode, informe y evidencia real de Unidad 6.
 - `tpi/`: scripts de integración, modelo ER, normalización, checklist, informe técnico y evidencia del TPI.
 
 ## Ejecucion segura
@@ -71,6 +73,10 @@ Las cuatro vistas se validaron con `EXCEPT` en ambos sentidos y devolvieron cero
 ## TPI
 
 La primera entrega parcial se resuelve en `tpi/`. El orden es: crear una copia desde `schema.sql`, ejecutar `tpi/01_migracion_modelo_final.sql`, `tpi/02_objetos_programables.sql` y `tpi/03_pruebas_objetos.sql`. Los documentos `tpi/docs/` acreditan ER, paso relacional y normalización; `tpi/docs/04_checklist_tpi.md` relaciona cada uno de los nueve requisitos con su evidencia. El informe breve solicitado está en `tpi/informe_tecnico_tpi.md`.
+
+## TP8 - Unidad 6
+
+Se copió la carga masiva Food Store en `foodstore`, se registraron métricas y estadísticas, y se ejecutó `ANALYZE` únicamente porque faltaban estadísticas en la copia. El respaldo custom de 6.420.169 bytes se restauró con éxito en `foodstore_restore_test`. Los cinco conteos coincidieron, los dos controles de datos inválidos devolvieron cero, el RPO observado fue 64,871 segundos y el RTO medido fue 2,664 segundos. El procedimiento y la evidencia están en `tp8/README.md`; el informe final es `tp8/DB_Santiago_Barretto.pdf`.
 
 ## Como agregar los proximos trabajos practicos
 
