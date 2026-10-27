@@ -1,0 +1,61 @@
+﻿2026-10-27T09:11:35-03:00 Inicio de respaldo custom de foodstore
+2026-10-27T09:11:35-03:00 categoria|5
+2026-10-27T09:11:35-03:00 cliente|20000
+2026-10-27T09:11:35-03:00 detalle_pedido|400000
+2026-10-27T09:11:35-03:00 detalles_invalidos|0
+2026-10-27T09:11:35-03:00 pedido|200000
+2026-10-27T09:11:35-03:00 producto|50000
+2026-10-27T09:11:35-03:00 productos_invalidos|0
+2026-10-27T09:11:35-03:00 Inicio pg_dump: 2026-10-27T09:11:35.4969733-03:00
+2026-10-27T09:11:36-03:00 ;
+2026-10-27T09:11:36-03:00 ; Archive created at 2026-10-27 09:11:35
+2026-10-27T09:11:36-03:00 ;     dbname: foodstore
+2026-10-27T09:11:36-03:00 ;     TOC Entries: 38
+2026-10-27T09:11:36-03:00 ;     Compression: gzip
+2026-10-27T09:11:36-03:00 ;     Dump Version: 1.16-0
+2026-10-27T09:11:36-03:00 ;     Format: CUSTOM
+2026-10-27T09:11:36-03:00 ;     Integer: 4 bytes
+2026-10-27T09:11:36-03:00 ;     Offset: 8 bytes
+2026-10-27T09:11:36-03:00 ;     Dumped from database version: 18.4
+2026-10-27T09:11:36-03:00 ;     Dumped by pg_dump version: 18.4
+2026-10-27T09:11:36-03:00 ;
+2026-10-27T09:11:36-03:00 ;
+2026-10-27T09:11:36-03:00 ; Selected TOC Entries:
+2026-10-27T09:11:36-03:00 ;
+2026-10-27T09:11:36-03:00 862; 1247 16391 TYPE public forma_pago_enum postgres
+2026-10-27T09:11:36-03:00 224; 1259 16410 TABLE public categoria postgres
+2026-10-27T09:11:36-03:00 223; 1259 16409 SEQUENCE public categoria_id_categoria_seq postgres
+2026-10-27T09:11:36-03:00 222; 1259 16398 TABLE public cliente postgres
+2026-10-27T09:11:36-03:00 221; 1259 16397 SEQUENCE public cliente_id_cliente_seq postgres
+2026-10-27T09:11:36-03:00 229; 1259 16460 TABLE public detalle_pedido postgres
+2026-10-27T09:11:36-03:00 228; 1259 16445 TABLE public pedido postgres
+2026-10-27T09:11:36-03:00 227; 1259 16444 SEQUENCE public pedido_id_pedido_seq postgres
+2026-10-27T09:11:36-03:00 226; 1259 16422 TABLE public producto postgres
+2026-10-27T09:11:36-03:00 225; 1259 16421 SEQUENCE public producto_id_producto_seq postgres
+2026-10-27T09:11:36-03:00 4958; 0 16410 TABLE DATA public categoria postgres
+2026-10-27T09:11:36-03:00 4956; 0 16398 TABLE DATA public cliente postgres
+2026-10-27T09:11:36-03:00 4963; 0 16460 TABLE DATA public detalle_pedido postgres
+2026-10-27T09:11:36-03:00 4962; 0 16445 TABLE DATA public pedido postgres
+2026-10-27T09:11:36-03:00 4960; 0 16422 TABLE DATA public producto postgres
+2026-10-27T09:11:36-03:00 4970; 0 0 SEQUENCE SET public categoria_id_categoria_seq postgres
+2026-10-27T09:11:36-03:00 4971; 0 0 SEQUENCE SET public cliente_id_cliente_seq postgres
+2026-10-27T09:11:36-03:00 4972; 0 0 SEQUENCE SET public pedido_id_pedido_seq postgres
+2026-10-27T09:11:36-03:00 4973; 0 0 SEQUENCE SET public producto_id_producto_seq postgres
+2026-10-27T09:11:36-03:00 4792; 2606 16420 CONSTRAINT public categoria categoria_pkey postgres
+2026-10-27T09:11:36-03:00 4788; 2606 16408 CONSTRAINT public cliente cliente_email_key postgres
+2026-10-27T09:11:36-03:00 4790; 2606 16406 CONSTRAINT public cliente cliente_pkey postgres
+2026-10-27T09:11:36-03:00 4801; 2606 16454 CONSTRAINT public pedido pedido_pkey postgres
+2026-10-27T09:11:36-03:00 4803; 2606 16470 CONSTRAINT public detalle_pedido pk_detalle_pedido postgres
+2026-10-27T09:11:36-03:00 4796; 2606 16438 CONSTRAINT public producto producto_pkey postgres
+2026-10-27T09:11:36-03:00 4797; 1259 16481 INDEX public idx_pedido_cliente_fecha postgres
+2026-10-27T09:11:36-03:00 4793; 1259 16482 INDEX public idx_producto_categoria_activo postgres
+2026-10-27T09:11:36-03:00 4798; 1259 16575 INDEX public idx_tp3_pedido_fecha postgres
+2026-10-27T09:11:36-03:00 4799; 1259 16574 INDEX public idx_tp3_pedido_forma_pago_fecha postgres
+2026-10-27T09:11:36-03:00 4794; 1259 16573 INDEX public idx_tp3_producto_categoria_precio_activo postgres
+2026-10-27T09:11:36-03:00 4806; 2606 16471 FK CONSTRAINT public detalle_pedido fk_detalle_pedido_pedido postgres
+2026-10-27T09:11:36-03:00 4807; 2606 16476 FK CONSTRAINT public detalle_pedido fk_detalle_pedido_producto postgres
+2026-10-27T09:11:36-03:00 4805; 2606 16455 FK CONSTRAINT public pedido fk_pedido_cliente postgres
+2026-10-27T09:11:36-03:00 4804; 2606 16439 FK CONSTRAINT public producto fk_producto_categoria postgres
+2026-10-27T09:11:37-03:00 OK pg_dump exit=0, pg_restore --list exit=0, bytes=6420169, sha256=DFDC95E37A650329F25262438A16BFA16B29DB0F924D18E3C891076ADE475324
+2026-10-27T09:11:37-03:00 Manifest: C:\Users\esteb\Desktop\faku\3r Semestre\BDII\U1\DB_Santiago_Barretto\tp8\backups\foodstore_20261027_091135.json
+2026-10-27T09:11:37-03:00 Archivo: C:\Users\esteb\Desktop\faku\3r Semestre\BDII\U1\DB_Santiago_Barretto\tp8\backups\foodstore_20261027_091135.dump

@@ -1,0 +1,17 @@
+﻿{
+    "database":  "foodstore",
+    "backup_started_at":  "2026-10-27T09:11:35.4969733-03:00",
+    "backup_completed_at":  "2026-10-27T09:11:36.8016848-03:00",
+    "dump_file":  "foodstore_20261027_091135.dump",
+    "bytes":  6420169,
+    "sha256":  "DFDC95E37A650329F25262438A16BFA16B29DB0F924D18E3C891076ADE475324",
+    "validation":  {
+                       "cliente":  20000,
+                       "pedido":  200000,
+                       "detalle_pedido":  400000,
+                       "detalles_invalidos":  0,
+                       "categoria":  5,
+                       "productos_invalidos":  0,
+                       "producto":  50000
+                   }
+}

@@ -1,0 +1,7 @@
+categoria|5
+cliente|20000
+detalle_pedido|400000
+detalles_invalidos|0
+pedido|200000
+producto|50000
+productos_invalidos|0

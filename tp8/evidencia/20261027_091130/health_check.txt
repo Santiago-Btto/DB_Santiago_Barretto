@@ -1,0 +1,27 @@
+   base    |          revisado_en          | version_postgresql | tamano 
+-----------+-------------------------------+--------------------+--------
+ foodstore | 2026-10-27 09:11:30.245738-03 | 18.4               | 150 MB
+(1 row)
+
+  datname  | conexiones_actuales | xact_commit | xact_rollback | deadlocks | stats_reset 
+-----------+---------------------+-------------+---------------+-----------+-------------
+ foodstore |                   1 |          11 |             0 |         0 | 
+(1 row)
+
+     tabla      | filas_estimadas | tuplas_muertas_estimadas | n_mod_since_analyze | last_vacuum | last_autovacuum | last_analyze | last_autoanalyze 
+----------------+-----------------+--------------------------+---------------------+-------------+-----------------+--------------+------------------
+ categoria      |               0 |                        0 |                   0 |             |                 |              | 
+ cliente        |               0 |                        0 |                   0 |             |                 |              | 
+ detalle_pedido |               0 |                        0 |                   0 |             |                 |              | 
+ pedido         |               0 |                        0 |                   0 |             |                 |              | 
+ producto       |               0 |                        0 |                   0 |             |                 |              | 
+(5 rows)
+
+  pid  | usename  | application_name | state  |    duracion     | wait_event_type | wait_event |                   consulta_inicio                   
+-------+----------+------------------+--------+-----------------+-----------------+------------+-----------------------------------------------------
+ 22652 | postgres | psql             | active | 00:00:00.004048 |                 |            | SELECT pid, usename, application_name, state,      +
+       |          |                  |        |                 |                 |            |        clock_timestamp() - query_start AS duracion,+
+       |          |                  |        |                 |                 |            |        wait_event_type, wait_event,                +
+       |          |                  |        |                 |                 |            |        LEFT(query, 160) AS
+(1 row)
+
