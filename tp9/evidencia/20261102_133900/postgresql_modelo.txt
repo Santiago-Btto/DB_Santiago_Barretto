@@ -1,0 +1,7 @@
+columnas_pedido|id_pedido,fecha,id_cliente,forma_pago
+columna_estado|f
+fk|fk_detalle_pedido_pedido:FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE RESTRICT
+fk|fk_detalle_pedido_producto:FOREIGN KEY (id_producto) REFERENCES producto(id_producto) ON DELETE RESTRICT
+fk|fk_pedido_cliente:FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE RESTRICT
+fk|fk_producto_categoria:FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria) ON DELETE RESTRICT
+clientes_sinteticos|t

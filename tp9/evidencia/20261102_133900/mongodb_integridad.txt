@@ -1,0 +1,1 @@
+INTEGRIDAD|documentos=20|lineas=40|campos_origen_iguales=true|cantidad_cero_rechazada=true|coleccion_sin_prueba=true

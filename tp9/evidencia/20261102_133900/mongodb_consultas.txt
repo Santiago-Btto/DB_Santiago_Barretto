@@ -1,0 +1,5 @@
+A_TODOS|20|400001:sin_estado_en_origen,400002:sin_estado_en_origen,400003:sin_estado_en_origen,400004:sin_estado_en_origen,400005:sin_estado_en_origen,400006:sin_estado_en_origen,400007:sin_estado_en_origen,400008:sin_estado_en_origen,400009:sin_estado_en_origen,400010:sin_estado_en_origen,400011:sin_estado_en_origen,400012:sin_estado_en_origen,400013:sin_estado_en_origen,405882:sin_estado_en_origen,450001:sin_estado_en_origen,455882:sin_estado_en_origen,500001:sin_estado_en_origen,505882:sin_estado_en_origen,550001:sin_estado_en_origen,555882:sin_estado_en_origen
+B_ESTADO|20|400001,400002,400003,400004,400005,400006,400007,400008,400009,400010,400011,400012,400013,405882,450001,455882,500001,505882,550001,555882
+C_PRODUCTO|8|400001,405882,450001,455882,500001,505882,550001,555882
+D_TOTAL|6|400003,400004,400006,400011,400012,400013
+E_FORMA_PAGO|7|400001,400004,400007,400010,400013,455882,550001

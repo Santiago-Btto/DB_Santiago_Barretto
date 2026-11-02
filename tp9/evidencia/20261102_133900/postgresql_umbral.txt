@@ -1,0 +1,3 @@
+total_min|3418.00
+total_max|26099.00
+superan_10000|6

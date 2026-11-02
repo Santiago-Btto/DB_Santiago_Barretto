@@ -1,0 +1,7 @@
+OpenCode 1.18.16 | agente plan | modelo opencode/beam-free | 02/11/2026
+
+Prompt: Compara PostgreSQL y MongoDB para Food Store. Modelo actual PostgreSQL: pedido(id_pedido,fecha,id_cliente,forma_pago), detalle_pedido(id_pedido,id_producto,cantidad,precio_unitario), cliente y producto; pedido NO tiene columna estado. Se consultan frecuentemente pedidos completos con sus lineas y hay que conservar coherencia de cantidades y precios historicos. Hay 20 pedidos sinteticos migrados como documentos con lineas embebidas y Decimal128, sin medicion de latencia. Da dos afirmaciones tecnicas verificables y una recomendacion prudente en menos de 180 palabras. No edites archivos.
+
+Respuesta observada: PostgreSQL: pedido y detalle separados requieren JOIN para obtener un pedido completo; MongoDB con líneas embebidas lo devuelve en una sola lectura. PostgreSQL garantiza ACID e integridad referencial entre cliente/producto/pedido; MongoDB no asegura atomicidad multi-documento por defecto ni tiene FK, por lo que la coherencia de cantidades/precios históricos depende de la aplicación. Recomendación: mantener PostgreSQL como fuente de verdad y validar con un benchmark de latencia real antes de migrar, ya que los 20 documentos migrados no miden rendimiento.
+
+Evaluación crítica y fuentes oficiales: ver IA_CONTRASTE.md.

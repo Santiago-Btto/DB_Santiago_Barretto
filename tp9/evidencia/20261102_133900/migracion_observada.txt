@@ -1,0 +1,5 @@
+Comando ejecutado: mongosh mongodb://127.0.0.1:27017/admin --quiet --file tp9/migrar_mongodb.js
+MIGRACION|base=foodstore_tp9|coleccion=pedidos|documentos=20|lineas=40
+MONGODB_VERSION|9.0.4
+IDS|400001,400002,400003,400004,400005,400006,400007,400008,400009,400010,400011,400012,400013,405882,450001,455882,500001,505882,550001,555882
+Salida observada el 02/11/2026. La colección persiste en MongoDB local.

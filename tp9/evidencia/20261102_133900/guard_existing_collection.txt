@@ -1,0 +1,2 @@
+Error: La coleccion foodstore_tp9.pedidos ya existe; no se reemplaza.
+exit_code=1

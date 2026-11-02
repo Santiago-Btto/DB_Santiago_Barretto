@@ -1,0 +1,3 @@
+VERSION|9.0.4
+COLECCION|foodstore_tp9.pedidos|documentos=20|indices=_id_,id_pedido_1,estado_1,lineas.id_producto_1,total_1
+EJEMPLO|{"total":{"$numberDecimal":"6626.00"},"estado":"sin_estado_en_origen","lineas":[{"cantidad":{"$numberInt":"2"},"subtotal":{"$numberDecimal":"1074.00"},"id_producto":{"$numberLong":"100001"},"precio_unitario":{"$numberDecimal":"537.00"},"nombre_producto_actual":"TP3_SB2026TP3_PRODUCTO_000001"},{"cantidad":{"$numberInt":"4"},"subtotal":{"$numberDecimal":"5552.00"},"id_producto":{"$numberLong":"100024"},"precio_unitario":{"$numberDecimal":"1388.00"},"nombre_producto_actual":"TP3_SB2026TP3_PRODUCTO_000024"}],"cliente":{"id_cliente":{"$numberLong":"40001"}},"id_pedido":{"$numberLong":"400001"},"forma_pago":"TARJETA"}
