@@ -136,7 +136,7 @@ def build() -> None:
     )
     story = [
         p("TP9 - Unidad 7: Food Store en MongoDB", title),
-        p("Santiago Barretto | DB_Santiago_Barretto | rama codex/tp9-unidad7-nosql | 02/11/2026", subtitle),
+        p("Santiago Barretto | DB_Santiago_Barretto | Unidad 7 | laboratorio: 02/11/2026", subtitle),
         Spacer(1, 5 * mm),
         p("1. Modelo documental y migración", h1),
         p("Desde PostgreSQL 18.4 se exportaron <b>20 pedidos existentes y 40 líneas</b> de la "
@@ -238,6 +238,50 @@ def build() -> None:
     story.append(p("Evidencia íntegra y scripts: tp9/evidencia/20261102_133900/, "
                    "consultas_mongodb.js y consultas_postgresql.sql. No se incluyeron "
                    "datos personales reales ni mediciones de rendimiento inventadas.", small))
+
+    story.append(PageBreak())
+    story.append(p("5. Evidencias de ejecución", h1))
+    story.append(p("Estas salidas se obtuvieron del laboratorio de PostgreSQL y MongoDB el "
+                   "02/11/2026. Se incluyen aquí para que el informe sea verificable por sí "
+                   "mismo; los archivos íntegros y los scripts están en el repositorio.", body))
+    evidence_rows = [
+        [p("Comprobación", cell_bold), p("Resultado observado", cell_bold)],
+        [p("Migración con mongosh", cell),
+         p("MIGRACION | base=foodstore_tp9 | coleccion=pedidos | documentos=20 | lineas=40", cell)],
+        [p("Colección e índices", cell),
+         p("foodstore_tp9.pedidos: 20 documentos; _id_, id_pedido_1, estado_1, "
+           "lineas.id_producto_1, total_1", cell)],
+        [p("Integridad posterior", cell),
+         p("20 documentos y 40 líneas iguales a la exportación; inserción de cantidad cero "
+           "rechazada; colección de prueba sin residuos", cell)],
+    ]
+    story.append(make_table(evidence_rows, [57 * mm, 119 * mm]))
+
+    story.append(p("Cuatro consultas MongoDB ejecutadas", h2))
+    query_rows = [[p("Consulta", cell_bold), p("Salida de mongosh", cell_bold)]]
+    query_rows += [
+        [p("A. Todos los pedidos", cell),
+         p("20 documentos; IDs 400001 a 400013 y 405882, 450001, 455882, "
+           "500001, 505882, 550001, 555882; todos con estado "
+           "sin_estado_en_origen", cell)],
+        [p("B. Estado seleccionado", cell),
+         p("20 pedidos con estado sin_estado_en_origen; IDs completos en la página 2", cell)],
+        [p("C. Producto 100001", cell),
+         p("8 pedidos: " + escape(comparisons["C_PRODUCTO"]["ids"].replace(",", ", ")), cell)],
+        [p("D. Total &gt; 10.000,00", cell),
+         p("6 pedidos: " + escape(comparisons["D_TOTAL"]["ids"].replace(",", ", ")), cell)],
+    ]
+    story.append(make_table(query_rows, [57 * mm, 119 * mm]))
+    story.append(p("En PostgreSQL, las consultas B y C devolvieron exactamente los mismos "
+                   "IDs que MongoDB (20 y 8 respectivamente), según la tabla de la página 2. "
+                   "El estado es una marca de ausencia, porque la tabla original no tiene "
+                   "esa columna; no se presentó como estado comercial real.", body))
+    story.append(p("<b>Repositorio y código:</b> "
+                   "<link href='https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/main/tp9' "
+                   "color='#0B7780'>github.com/Santiago-Btto/DB_Santiago_Barretto/tree/main/tp9</link>. "
+                   "Allí se encuentran los scripts "
+                   "<b>consultas_mongodb.js</b> y <b>consultas_postgresql.sql</b>, "
+                   "la exportación y las salidas completas en evidencia/20261102_133900/.", small))
 
     def footer(canvas, _doc):
         canvas.saveState()

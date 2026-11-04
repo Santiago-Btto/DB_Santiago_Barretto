@@ -16,7 +16,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | TP6 - Unidad 4 | FNBC y desnormalización controlada | Descomposición sin pérdida de ControlLoteAlmacen, vista de compatibilidad, vista materializada diaria con sincronización por triggers y auditoría. | Ejecutado en `food_store_tp_u4_fnbc`; evidencia real en `tp6/evidencia/20261003_153429/`. |
 | TP7 - Unidad 5 | Administración y seguridad | Roles de mínimo privilegio, auditoría nativa, simulacro local, anonimización y bitácora de IA. | Ejecutado en `food_store_tp_u5_seguridad`; evidencia real en `tp7/evidencia/20261005_113300/`. |
 | TP8 - Unidad 6 | Mantenimiento, respaldo y recuperación | Plan de mantenimiento, chequeo de salud, `ANALYZE` condicional, respaldo custom con SHA-256 y restauración medida con RPO/RTO. | Ejecutado sobre `foodstore` y `foodstore_restore_test`; evidencia real en `tp8/evidencia/20261027_091130/`. |
-| TP9 - Unidad 7 (rama separada) | MongoDB y modelo documental | 20 pedidos y 40 líneas migrados a documentos embebidos, consultas equivalentes, comparación de IDs e integridad, y crítica de IA. | Ejecutado en PostgreSQL `foodstore` y MongoDB `foodstore_tp9`; evidencia en `tp9/evidencia/20261102_133900/`. |
+| TP9 - Unidad 7 | MongoDB y modelo documental | 20 pedidos y 40 líneas migrados a documentos embebidos, consultas equivalentes, comparación de IDs e integridad, y crítica de IA. | Ejecutado en PostgreSQL `foodstore` y MongoDB `foodstore_tp9`; evidencia en `tp9/evidencia/20261102_133900/`. Disponible en `main` y en la rama `codex/tp9-unidad7-nosql`. |
 | TPI - Primera entrega parcial | Integración Unidades 1, 2 y 3 | Modelo ER, mapeo relacional, 3FN/BCNF, migración final, PL/pgSQL, triggers, borrado lógico y evidencia de concurrencia. | Ejecutado en `food_store_tpi_verificacion_final`; evidencia real en `tpi/evidencia/20260923_214500/`. |
 
 ## Estructura
@@ -33,7 +33,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 - `tp6/`: resolución de FNBC, desnormalización controlada, informe final y evidencia real de PostgreSQL para la Unidad 4.
 - `tp7/`: resolución de Administración y Seguridad, scripts, documentación, bitácora y evidencia del TP7 de Unidad 5.
 - `tp8/`: especificación, scripts de respaldo/monitoreo/restauración, revisión de OpenCode, informe y evidencia real de Unidad 6.
-- `tp9/` (rama `codex/tp9-unidad7-nosql`): exportación, migración, consultas PostgreSQL/MongoDB, comparación verificable, contraste de IA e informe PDF de Unidad 7.
+- `tp9/`: exportación, migración, consultas PostgreSQL/MongoDB, comparación verificable, contraste de IA e informe PDF de Unidad 7.
 - `tpi/`: scripts de integración, modelo ER, normalización, checklist, informe técnico y evidencia del TPI.
 
 ## Ejecucion segura
@@ -79,6 +79,10 @@ La primera entrega parcial se resuelve en `tpi/`. El orden es: crear una copia d
 ## TP8 - Unidad 6
 
 Se copió la carga masiva Food Store en `foodstore`, se registraron métricas y estadísticas, y se ejecutó `ANALYZE` únicamente porque faltaban estadísticas en la copia. El respaldo custom de 6.420.169 bytes se restauró con éxito en `foodstore_restore_test`. Los cinco conteos coincidieron, los dos controles de datos inválidos devolvieron cero, el RPO observado fue 64,871 segundos y el RTO medido fue 2,664 segundos. El procedimiento y la evidencia están en `tp8/README.md`; el informe final es `tp8/DB_Santiago_Barretto.pdf`.
+
+## TP9 - Unidad 7
+
+El trabajo de MongoDB/NoSQL está completo en `tp9/` y también se conserva en la rama separada `codex/tp9-unidad7-nosql`. El informe para subir a la plataforma es **`tp9/DB_Santiago_Barretto.pdf`**: contiene el modelo, los resultados ejecutados, la comparación PostgreSQL/MongoDB, el contraste de IA y la conclusión. El PDF antiguo que solo contenía un enlace al repositorio no es la entrega de esta unidad. Los scripts requeridos están en `tp9/consultas_mongodb.js` y `tp9/consultas_postgresql.sql`; la evidencia íntegra está en `tp9/evidencia/20261102_133900/`.
 
 ## Como agregar los proximos trabajos practicos
 

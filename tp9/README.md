@@ -1,6 +1,6 @@
 # TP9 - Unidad 7: NoSQL y Food Store
 
-Resolución en la rama `codex/tp9-unidad7-nosql`. Se ejecutó sobre PostgreSQL 18.4 (`foodstore`) y MongoDB Community 9.0.4 (`foodstore_tp9.pedidos`) el 02/11/2026. Se migraron 20 pedidos y 40 líneas de la carga sintética existente; no se alteró la base relacional ni se migró el proyecto completo.
+Resolución publicada en `main` y conservada en la rama `codex/tp9-unidad7-nosql`. Se ejecutó sobre PostgreSQL 18.4 (`foodstore`) y MongoDB Community 9.0.4 (`foodstore_tp9.pedidos`) el 02/11/2026. Se migraron 20 pedidos y 40 líneas de la carga sintética existente; no se alteró la base relacional ni se migró el proyecto completo.
 
 ## Entregables
 
@@ -13,7 +13,7 @@ Resolución en la rama `codex/tp9-unidad7-nosql`. Se ejecutó sobre PostgreSQL 1
 - `verificar_mongodb.js`: comprueba 20 documentos y 40 líneas contra la exportación campo a campo; prueba que MongoDB rechaza una línea con cantidad cero.
 - `IA_CONTRASTE.md`: prompt real, dos afirmaciones contrastadas con documentación oficial y conclusión de menos de 200 palabras.
 - `evidencia/20261102_133900/`: salidas de los dos motores, comparación y comprobaciones.
-- `DB_Santiago_Barretto.pdf`: informe de entrega, de hasta cinco páginas y sólo sobre este TP.
+- `DB_Santiago_Barretto.pdf`: informe de entrega de tres páginas, con modelo, consultas, resultados y evidencias visibles. Es el archivo que debe reemplazar al PDF de una página que solo contenía el enlace a GitHub.
 
 ## Ejecución reproducible en Windows
 
