@@ -1,0 +1,13 @@
+Hallazgos (solo lectura; no se modificó nada):
+
+1. `tp10/run_lab.py:67-95` — idempotencia débil: `prepare_pg` falla si `foodstore_tp10_u8` ya existe (a menos que `--existing-fresh-lab`) y `create_sqlite()` falla si `movil/foodstore_movil.db` existe (`run_lab.py:133`, `214`). Riesgo: no se puede reejecutar tras un fallo parcial sin borrar manualmente la copia/base SQLite. Comprobar: ejecutar dos veces sin limpiar; la segunda debe fallar con “ya existe”.
+
+2. `tp10/run_lab.py:62-65` — verificación incompleta del semáforo: `pg_business_state` solo compara cantidad de `pedido` y suma de `stock`; no detectaría cambios en `activo`, `deleted_at` o `precio_lista` en PostgreSQL. Riesgo: auditoría de “no muta origen” más débil de lo que parece. Comprobar: comparar `SELECT *`/hash de filas afectadas antes/después en `foodstore_tp10_u8`.
+
+3. `tp8/restore_test.ps1:55-61` y `88-92` — idempotencia/robustez débil: la base `foodstore_restore_test` no se limpia/recrea y la existencia se decide con `$existsSource[-1]`/`$existsTarget[-1]` (última línea de psql), que puede ser una línea de aviso; además interpola `$sourceDatabase`/`$restoreDatabase` en SQL. Riesgo: falso positivo o error si psql emite notices. Comprobar: inspeccionar salida capturada o ejecutar con `psql -qAt`.
+
+4. `tp9/migrar_mongodb.js:12-23,107` — idempotencia débil ante fallo parcial: si `insertMany` falla a mitad, la colección queda creada y una reejecución aborta por “ya existe”; no hay transacción/limpieza. Riesgo: estado inconsistente y recuperación manual. Comprobar: simular error de validación a mitad y reejecutar.
+
+Hipótesis descartable: `SIMULADO_APROBADO` no se confunde con venta en los scripts. Evidencia: `tp10/movil/semaforo.sql:36-43` solo actualiza `cola_sync` (SQLite local); `run_lab.py` exige `pg_before == pg_after` para pedidos/stock (`run_lab.py:200-205`) y no hay `INSERT` en `pedido`/`detalle_pedido`. No se encontró script que trate ese estado como venta.
+
+Base de origen: `tp10/run_lab.py` clona `foodstore` en `foodstore_tp10_u8` y verifica conteos/productos antes/después (`run_lab.py:71-91,280-283`); `tp10/movil/servidor_snapshot.sql:3-12` se guarda con guardia de base y solo corre en la copia. `tp8/maintenance.sql` sí ejecuta `ANALYZE` sobre `foodstore`, modificando estadísticas (no datos de negocio).

@@ -1,0 +1,13 @@
+SQLite final (consultas de solo lectura):
+SELECT estado, count(*) AS solicitudes FROM cola_sync GROUP BY estado ORDER BY estado;
+CONFLICTO|1
+RECHAZADO|2
+SIMULADO_APROBADO|3
+SELECT id, precio_centavos, stock_visto, disponible, eliminado FROM producto_cache ORDER BY id;
+100001|54700|19|1|0
+100002|57500|2|1|0
+100003|61100|57|0|1
+100004|64800|76|1|0
+PRAGMA integrity_check;
+ok
+PRAGMA foreign_key_check;

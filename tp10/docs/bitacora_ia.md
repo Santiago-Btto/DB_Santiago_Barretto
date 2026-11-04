@@ -1,0 +1,9 @@
+# 4.b - Bitácora de uso de IA
+
+| Entrada | Solicitud y herramienta | Aceptado | Corregido o descartado y por qué |
+|---|---|---|---|
+| 1 · 04/11/2026 | OpenCode Plan: proponer `STRICT`, FKs, centavos, lápidas, UUID y semáforo desde `docs/kiro/`. Respuesta: `evidencia/opencode_diseno_respuesta.txt`. | Prioridad rojo > amarillo > verde, `WHERE estado='PENDIENTE'`, transacción y FKs activas. C2-C6 pasaron en SQLite 3.49.1. | La propuesta omitía `usuario` y `forma_pago`, exigidos por la guía; se agregaron. Se descartó una FK de `producto_cache` hacia `snapshot_servidor`, porque una caché debe seguir consultable offline y conservar lápidas aunque cambie la importación. |
+| 2 · 04/11/2026 | OpenCode Plan: revisión integral de scripts de varias unidades; hallazgo de verificación incompleta en Unidad 8. Respuesta: `evidencia/opencode_revision_respuesta.txt`. | Se aceptó el riesgo y se corrigió la comprobación de PostgreSQL con hash de los cuatro productos además de pedidos y stock. | No se aceptó la inferencia de una venta: `SIMULADO_APROBADO` sólo cambia la cola local. La evidencia registra el mismo estado PostgreSQL antes/después de cada semáforo. |
+| 3 · 04/11/2026 | OpenCode Plan: riesgos de recuperación en TP9 y restauración de Unidad 6. | Se documentó el manejo manual de una migración MongoDB parcial y la regla de no sobreescribir colecciones de laboratorio sin inspección. | Se descartó el supuesto problema de interpolación en `restore_test.ps1` para este ensayo: los nombres de bases son constantes y `SELECT EXISTS` devolvió una sola línea `t`. No se modificó el TP de Unidad 6 sin evidencia de error. |
+
+Codex desarrolló, ejecutó y verificó los scripts finales. El modo Plan de OpenCode fue consultivo; ninguna salida se ejecutó sin revisión. La spec `docs/kiro/` tiene formato compatible con la actividad de Kiro, pero no se afirma haber abierto la aplicación Kiro en este equipo.

@@ -1,0 +1,4 @@
+SELECT EXISTS para foodstore:
+t
+SELECT EXISTS para foodstore_restore_test:
+t

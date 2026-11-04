@@ -1,0 +1,7 @@
+# 3.b - Complemento del plan de mantenimiento de Unidad 6
+
+El [plan de Unidad 6](../../tp8/SPEC_U6.md) conserva `pg_dump` custom diario con SHA-256 y restauración de prueba semanal, comparando conteos y reglas. Se respalda PostgreSQL como fuente de verdad. La copia MongoDB de pedidos se puede reconstruir desde PostgreSQL y su exportación versionada; si se utiliza operativamente, también requiere respaldo y prueba de restauración propios. Los borradores y la cola SQLite de cada tablet deben exportarse o respaldarse cifrados al cerrar la jornada, porque todavía no son pedidos del servidor. Este laboratorio no configura respaldo automatizado de tablets.
+
+Si se restaura un PostgreSQL antiguo, se invalida la confianza en las instantáneas de las tablets. Se detiene el envío automático, se conserva cada solicitud con UUID, se descarga una instantánea nueva y se vuelve a revisar precio, disponibilidad, baja y stock. Los borradores no se convierten en ventas por un estado local `SIMULADO_APROBADO`. Las copias MongoDB derivadas se cotejan o reconstruyen frente al servidor restaurado.
+
+El responsable de operaciones revisaría `CONFLICTO` y `RECHAZADO` al recuperar conexión y al cierre de cada jornada; en una feria activa, cada 30 minutos durante la operación. Conflictos requieren aceptación explícita del nuevo precio; rechazados se corrigen o cancelan sin reusar el UUID. En un sistema real, el servidor conserva una tabla de solicitudes UUID únicas y confirma una venta sólo dentro de una transacción que revalida stock y precio.

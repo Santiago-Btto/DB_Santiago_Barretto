@@ -1,0 +1,21 @@
+PG_COPIA|foodstore_tp10_u8|productos=50000|pedidos=200000|detalles=400000
+PG_FUENTE_SIN_CAMBIOS|foodstore|50000|200000|400000
+SQLITE_VERSION|3.49.1|foreign_keys=ON|STRICT=5_tablas
+SNAPSHOT|c1_inicial|filas=4|fecha_copia=2026-11-04T13:50:17.399Z
+C1|catalogo_sin_servidor=4|commit_borrador_items_cola=1|rollback=sin_filas
+C7|cantidad|ERROR=CHECK constraint failed: cantidad > 0
+C7|producto|ERROR=FOREIGN KEY constraint failed
+C7|filas_item_antes=1|filas_item_despues=1
+C1|estado=SIMULADO_APROBADO|motivo=coincide con instantanea del servidor|pg_antes=200000|4999908|70aed30b89c090c635a9858cff3c4f5c|pg_despues=200000|4999908|70aed30b89c090c635a9858cff3c4f5c
+SNAPSHOT|c2_precio_cambiado|filas=4|fecha_copia=2026-11-04T13:50:18.755Z
+C2_precio|estado=CONFLICTO|motivo=producto 100001 precio cambiado|pg_antes=200000|4999908|ce47e7c65d6e174b94475c8029de35c1|pg_despues=200000|4999908|ce47e7c65d6e174b94475c8029de35c1
+C2_precio_aceptado|estado=SIMULADO_APROBADO|motivo=coincide con instantanea del servidor|pg_antes=200000|4999908|ce47e7c65d6e174b94475c8029de35c1|pg_despues=200000|4999908|ce47e7c65d6e174b94475c8029de35c1
+SNAPSHOT|c3_stock_y_precio|filas=4|fecha_copia=2026-11-04T13:50:19.500Z
+C3_stock_prioridad_rojo|estado=RECHAZADO|motivo=producto 100002 stock insuficiente|pg_antes=200000|4999872|8dfc5f010ffbdffb2ad6673d36eb4542|pg_despues=200000|4999872|8dfc5f010ffbdffb2ad6673d36eb4542
+SNAPSHOT|c4_baja_logica|filas=4|fecha_copia=2026-11-04T13:50:19.737Z
+C4_baja_logica|estado=RECHAZADO|motivo=producto 100003 eliminado|pg_antes=200000|4999872|abd7d76c18cdc5aa2f3a1405baa13d0e|pg_despues=200000|4999872|abd7d76c18cdc5aa2f3a1405baa13d0e
+C4|catalogo_100003=ausente|lapida_conservada=1
+C5_sin_cambios|estado=SIMULADO_APROBADO|motivo=coincide con instantanea del servidor|pg_antes=200000|4999872|abd7d76c18cdc5aa2f3a1405baa13d0e|pg_despues=200000|4999872|abd7d76c18cdc5aa2f3a1405baa13d0e
+C6|UUID_repetido|ERROR=UNIQUE constraint failed: cola_sync.solicitud_uuid
+C6|UUID_unico=1|reejecucion_semaforo_cambios=0
+FINAL|SQLite_integrity_check=ok|foreign_key_check=0|PostgreSQL_fuente_sin_cambios=true|pedidos_copia=200000

@@ -1,0 +1,138 @@
+## Esquema SQLite (STRICT)
+
+```sql
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE snapshot_servidor (
+    id_producto INTEGER PRIMARY KEY,
+    nombre TEXT NOT NULL CHECK (trim(nombre) <> ''),
+    precio_centavos INTEGER NOT NULL CHECK (precio_centavos > 0),
+    stock_visto INTEGER NOT NULL CHECK (stock_visto >= 0),
+    disponible INTEGER NOT NULL CHECK (disponible IN (0,1)),
+    deleted_at TEXT,                       -- lapida
+    copiado_en TEXT NOT NULL
+) STRICT;
+
+CREATE TABLE producto_cache (
+    id_producto INTEGER PRIMARY KEY,
+    nombre TEXT NOT NULL CHECK (trim(nombre) <> ''),
+    precio_centavos INTEGER NOT NULL CHECK (precio_centavos > 0),
+    stock INTEGER NOT NULL CHECK (stock >= 0),
+    disponible INTEGER NOT NULL CHECK (disponible IN (0,1)),
+    deleted_at TEXT,
+    actualizado_en TEXT NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES snapshot_servidor(id_producto)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+) STRICT;
+
+CREATE TABLE borrador (
+    uuid TEXT PRIMARY KEY,
+    creado_en TEXT NOT NULL DEFAULT (datetime('now')),
+    estado TEXT NOT NULL DEFAULT 'BORRADOR'
+        CHECK (estado IN ('BORRADOR','ENVIADO','CANCELADO'))
+) STRICT;
+
+CREATE TABLE borrador_item (
+    id_item INTEGER PRIMARY KEY,
+    uuid_borrador TEXT NOT NULL,
+    id_producto INTEGER NOT NULL,
+    cantidad INTEGER NOT NULL CHECK (cantidad > 0),
+    precio_centavos INTEGER NOT NULL CHECK (precio_centavos > 0),
+    FOREIGN KEY (uuid_borrador) REFERENCES borrador(uuid)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES producto_cache(id_producto)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    UNIQUE (uuid_borrador, id_producto)
+) STRICT;
+
+CREATE TABLE cola_sync (
+    uuid TEXT PRIMARY KEY,                 -- UUID unico de la solicitud
+    uuid_borrador TEXT NOT NULL,
+    estado TEXT NOT NULL DEFAULT 'PENDIENTE'
+        CHECK (estado IN ('PENDIENTE','CONFLICTO','RECHAZADO','SIMULADO_APROBADO')),
+    motivo TEXT,
+    creado_en TEXT NOT NULL DEFAULT (datetime('now')),
+    resuelto_en TEXT,
+    FOREIGN KEY (uuid_borrador) REFERENCES borrador(uuid)
+        ON DELETE RESTRICT ON UPDATE CASCADE
+) STRICT;
+
+CREATE INDEX idx_cola_sync_estado ON cola_sync(estado);
+CREATE INDEX idx_borrador_item_borrador ON borrador_item(uuid_borrador);
+```
+
+## Semáforo (solo PENDIENTE, prioridad RECHAZADO > CONFLICTO > SIMULADO_APROBADO)
+
+```sql
+BEGIN IMMEDIATE;
+
+WITH item_eval AS (
+  SELECT
+    cs.uuid AS uuid_solicitud,
+    bi.id_producto,
+    CASE
+      WHEN s.id_producto IS NULL        THEN 'RECHAZADO'
+      WHEN s.deleted_at IS NOT NULL      THEN 'RECHAZADO'
+      WHEN s.disponible = 0             THEN 'RECHAZADO'
+      WHEN s.stock_visto < bi.cantidad  THEN 'RECHAZADO'
+      WHEN s.precio_centavos <> bi.precio_centavos THEN 'CONFLICTO'
+      ELSE 'SIMULADO_APROBADO'
+    END AS resultado,
+    CASE
+      WHEN s.id_producto IS NULL        THEN 'producto ' || bi.id_producto || ' ausente en snapshot'
+      WHEN s.deleted_at IS NOT NULL      THEN 'producto ' || bi.id_producto || ' eliminado (lapida)'
+      WHEN s.disponible = 0             THEN 'producto ' || bi.id_producto || ' no disponible'
+      WHEN s.stock_visto < bi.cantidad  THEN 'producto ' || bi.id_producto || ' stock insuficiente'
+      WHEN s.precio_centavos <> bi.precio_centavos THEN 'producto ' || bi.id_producto || ' precio distinto'
+      ELSE NULL
+    END AS motivo_item
+  FROM cola_sync cs
+  JOIN borrador b ON b.uuid = cs.uuid_borrador
+  JOIN borrador_item bi ON bi.uuid_borrador = b.uuid
+  LEFT JOIN snapshot_servidor s ON s.id_producto = bi.id_producto
+  WHERE cs.estado = 'PENDIENTE'
+),
+agg AS (
+  SELECT
+    uuid_solicitud,
+    CASE MAX(CASE resultado
+            WHEN 'RECHAZADO' THEN 3
+            WHEN 'CONFLICTO' THEN 2
+            ELSE 1
+          END)
+      WHEN 3 THEN 'RECHAZADO'
+      WHEN 2 THEN 'CONFLICTO'
+      ELSE 'SIMULADO_APROBADO'
+    END AS nuevo_estado,
+    NULLIF(group_concat(motivo_item, '; '), '') AS motivo
+  FROM item_eval
+  GROUP BY uuid_solicitud
+)
+UPDATE cola_sync
+SET estado = (SELECT a.nuevo_estado FROM agg a WHERE a.uuid_solicitud = cola_sync.uuid),
+    motivo = (SELECT a.motivo FROM agg a WHERE a.uuid_solicitud = cola_sync.uuid),
+    resuelto_en = datetime('now')
+WHERE estado = 'PENDIENTE'
+  AND uuid IN (SELECT uuid_solicitud FROM agg);
+
+COMMIT;
+```
+
+## Riesgos
+- `PRAGMA foreign_keys` es por conexión; si el cliente no lo activa, las FK no se enforce (mitigar: activarlo en la conexión y correr `PRAGMA foreign_key_check`).
+- SQLite STRICT requiere >=3.37; verificar versión.
+- Reimportar `snapshot_servidor` debe ser upsert (`ON CONFLICT`) para no perder lápidas; mantener `producto_cache` sincronizado en la misma transacción.
+- `group_concat` no garantiza orden; motivo puede variar entre ejecuciones (aceptable para laboratorio).
+- Solicitudes PENDIENTE sin ítems no se actualizan (quedan pendientes); validar que todo borrador tenga al menos un ítem.
+- Idempotencia depende del `WHERE estado='PENDIENTE'`; un UUID duplicado falla por PK antes de reevaluar.
+
+## Qué probar
+- `PRAGMA foreign_keys=ON; PRAGMA integrity_check; PRAGMA foreign_key_check;` (vacío).
+- C1/C7: transacción de borrador con cantidad <=0 o producto inexistente → ROLLBACK → 0 filas en `borrador`/`borrador_item`/`cola_sync`.
+- C2: precio cambiado en snapshot → CONFLICTO; nueva solicitud con precio aceptado → SIMULADO_APROBADO.
+- C3/C4: ausente/no disponible/lápida/stock insuficiente → RECHAZADO con motivo; PostgreSQL sin pedidos ni descuento de stock.
+- C5: todos coinciden → SIMULADO_APROBADO una sola vez.
+- C6: reenviar mismo UUID → error de PK y estado previo no reevaluado.
+- COMMIT/ROLLBACK explícitos y verificación de conteos antes/después en PostgreSQL.
+
+Datos sintéticos únicamente: snapshot exporta 4 productos (incluye 100001), sin clientes, usuarios, contraseñas ni correos.
