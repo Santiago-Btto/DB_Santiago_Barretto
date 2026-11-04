@@ -17,6 +17,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | TP7 - Unidad 5 | Administración y seguridad | Roles de mínimo privilegio, auditoría nativa, simulacro local, anonimización y bitácora de IA. | Ejecutado en `food_store_tp_u5_seguridad`; evidencia real en `tp7/evidencia/20261005_113300/`. |
 | TP8 - Unidad 6 | Mantenimiento, respaldo y recuperación | Plan de mantenimiento, chequeo de salud, `ANALYZE` condicional, respaldo custom con SHA-256 y restauración medida con RPO/RTO. | Ejecutado sobre `foodstore` y `foodstore_restore_test`; evidencia real en `tp8/evidencia/20261027_091130/`. |
 | TP9 - Unidad 7 | MongoDB y modelo documental | 20 pedidos y 40 líneas migrados a documentos embebidos, consultas equivalentes, comparación de IDs e integridad, y crítica de IA. | Ejecutado en PostgreSQL `foodstore` y MongoDB `foodstore_tp9`; evidencia en `tp9/evidencia/20261102_133900/`. Disponible en `main` y en la rama `codex/tp9-unidad7-nosql`. |
+| TP8 de la cátedra - Unidad 8 (rama aparte) | SQLite offline y sincronización simulada | Reutiliza Food Store y MongoDB de TP9; base de tablet, instantáneas, semáforo C1-C7, revisión de IA e informe. | Entrega completa en la rama [`codex/tp10-unidad8-sqlite`](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tp10-unidad8-sqlite/tp10). En `main` queda sólo esta referencia; la carpeta `tp8/` de `main` sigue siendo Unidad 6. |
 | TPI - Primera entrega parcial | Integración Unidades 1, 2 y 3 | Modelo ER, mapeo relacional, 3FN/BCNF, migración final, PL/pgSQL, triggers, borrado lógico y evidencia de concurrencia. | Ejecutado en `food_store_tpi_verificacion_final`; evidencia real en `tpi/evidencia/20260923_214500/`. |
 
 ## Estructura
@@ -83,6 +84,10 @@ Se copió la carga masiva Food Store en `foodstore`, se registraron métricas y 
 ## TP9 - Unidad 7
 
 El trabajo de MongoDB/NoSQL está completo en `tp9/` y también se conserva en la rama separada `codex/tp9-unidad7-nosql`. El informe para subir a la plataforma es **`tp9/DB_Santiago_Barretto.pdf`**: contiene el modelo, los resultados ejecutados, la comparación PostgreSQL/MongoDB, el contraste de IA y la conclusión. El PDF antiguo que solo contenía un enlace al repositorio no es la entrega de esta unidad. Los scripts requeridos están en `tp9/consultas_mongodb.js` y `tp9/consultas_postgresql.sql`; la evidencia íntegra está en `tp9/evidencia/20261102_133900/`.
+
+## TP8 de la cátedra - Unidad 8
+
+La resolución de la feria y la tablet SQLite está en [`codex/tp10-unidad8-sqlite/tp10`](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tp10-unidad8-sqlite/tp10), derivada de TP9/Unidad 7. Se encuentra en `tp10/` para no reemplazar `tp8/`, que en este repositorio documenta la Unidad 6. La rama contiene scripts, CSV, base SQLite, spec, evidencia y un informe PDF de cinco páginas. La rama principal sólo enlaza el trabajo; no incorpora ni ejecuta sus cambios.
 
 ## Como agregar los proximos trabajos practicos
 
