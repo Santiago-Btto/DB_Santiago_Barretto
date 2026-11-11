@@ -18,6 +18,7 @@ La base y los scripts estan preparados para PostgreSQL. Ningun archivo afirma qu
 | TP8 - Unidad 6 | Mantenimiento, respaldo y recuperación | Plan de mantenimiento, chequeo de salud, `ANALYZE` condicional, respaldo custom con SHA-256 y restauración medida con RPO/RTO. | Ejecutado sobre `foodstore` y `foodstore_restore_test`; evidencia real en `tp8/evidencia/20261027_091130/`. |
 | TP9 - Unidad 7 | MongoDB y modelo documental | 20 pedidos y 40 líneas migrados a documentos embebidos, consultas equivalentes, comparación de IDs e integridad, y crítica de IA. | Ejecutado en PostgreSQL `foodstore` y MongoDB `foodstore_tp9`; evidencia en `tp9/evidencia/20261102_133900/`. Disponible en `main` y en la rama `codex/tp9-unidad7-nosql`. |
 | TP8 de la cátedra - Unidad 8 (rama aparte) | SQLite offline y sincronización simulada | Reutiliza Food Store y MongoDB de TP9; base de tablet, instantáneas, semáforo C1-C7, revisión de IA e informe. | Entrega completa en la rama [`codex/tp10-unidad8-sqlite`](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tp10-unidad8-sqlite/tp10). En `main` queda sólo esta referencia; la carpeta `tp8/` de `main` sigue siendo Unidad 6. |
+| TPI - Segunda entrega parcial (rama aparte) | Integración y auditoría de Unidades 4 a 8 | Reúne PostgreSQL, MongoDB y SQLite; informe técnico único, matriz de 14 objetivos, plan de reversión, programación local de respaldo y revisión de IA. | En [`codex/tpi-segunda-entrega`](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tpi-segunda-entrega/tpi2). La matriz declara explícitamente los requisitos formales que todavía no se acreditan. |
 | TPI - Primera entrega parcial | Integración Unidades 1, 2 y 3 | Modelo ER, mapeo relacional, 3FN/BCNF, migración final, PL/pgSQL, triggers, borrado lógico y evidencia de concurrencia. | Ejecutado en `food_store_tpi_verificacion_final`; evidencia real en `tpi/evidencia/20260923_214500/`. |
 
 ## Estructura
@@ -88,6 +89,10 @@ El trabajo de MongoDB/NoSQL está completo en `tp9/` y también se conserva en l
 ## TP8 de la cátedra - Unidad 8
 
 La resolución de la feria y la tablet SQLite está en [`codex/tp10-unidad8-sqlite/tp10`](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tp10-unidad8-sqlite/tp10), derivada de TP9/Unidad 7. Se encuentra en `tp10/` para no reemplazar `tp8/`, que en este repositorio documenta la Unidad 6. La rama contiene scripts, CSV, base SQLite, spec, evidencia y un informe PDF de cinco páginas. La rama principal sólo enlaza el trabajo; no incorpora ni ejecuta sus cambios.
+
+## TPI - Segunda entrega parcial
+
+El [informe y checklist de los 14 objetivos](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tpi-segunda-entrega/tpi2) están en una rama integradora que también contiene `tp10/` para la Unidad 8. Incluye un PDF de dos páginas, evidencia de respaldo programado y correcciones de seguridad. La revisión indica con transparencia los requisitos formales que aún faltan: uso efectivo de Kiro, generación final con OpenCode y revisión semántica individual de todos los scripts. Para evaluar esta entrega, abrir el enlace de la rama; `main` conserva únicamente esta referencia.
 
 ## Como agregar los proximos trabajos practicos
 
