@@ -92,7 +92,7 @@ La resolución de la feria y la tablet SQLite está en [`codex/tp10-unidad8-sqli
 
 ## TPI - Segunda entrega parcial
 
-El [informe y checklist de los 14 objetivos](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tpi-segunda-entrega/tpi2) están en una rama integradora que también contiene `tp10/` para la Unidad 8. Incluye un PDF de dos páginas, evidencia de respaldo programado y correcciones de seguridad. La revisión indica con transparencia los requisitos formales que aún faltan: uso efectivo de Kiro, generación final con OpenCode y revisión semántica individual de todos los scripts. Para evaluar esta entrega, abrir el enlace de la rama; `main` conserva únicamente esta referencia.
+La [rama integradora de la segunda entrega](https://github.com/Santiago-Btto/DB_Santiago_Barretto/tree/codex/tpi-segunda-entrega) reúne PostgreSQL, MongoDB y SQLite, los scripts y pruebas de las unidades 4 a 8, y el [informe técnico PDF](https://github.com/Santiago-Btto/DB_Santiago_Barretto/blob/codex/tpi-segunda-entrega/tpi2/DB_Santiago_Barretto_TPI2.pdf). El [checklist de 14 objetivos](https://github.com/Santiago-Btto/DB_Santiago_Barretto/blob/codex/tpi-segunda-entrega/tpi2/checklist_entrega.md) enlaza cada evidencia. Codex redactó las specs en lugar de Kiro, a pedido del estudiante; OpenCode Build generó variantes de los scripts SQLite que Codex corrigió, probó y adoptó como versión final. La revisión técnica cubre 110/110 scripts. La aceptación de la sustitución de Kiro y la defensa personal corresponden a la cátedra y al estudiante. Para evaluar esta entrega, abrir la rama integradora: `main` conserva únicamente esta referencia.
 
 ## Como agregar los proximos trabajos practicos
 
