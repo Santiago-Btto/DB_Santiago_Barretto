@@ -29,7 +29,7 @@ Los scripts aceptan `-PgBin`, `-DbHost`, `-DbPort` y `-DbUser`. No piden ni alma
 
 La primera preparación de `foodstore` se hizo con `createdb --template=food_store_tp5_base foodstore`, sólo cuando el destino no existía. Para otro equipo, crear primero una base `foodstore` con el esquema y datos Food Store, y comprobar que las cinco tablas tengan datos antes de iniciar el respaldo.
 
-`restore_test.ps1` se detiene si `foodstore_restore_test` ya existe. El ensayo repetido requiere eliminar **sólo esa base descartable**, tras revisar que es la copia del TP. El respaldo binario queda local en `tp8/backups/` y no se versiona. Los logs completos de ejecución quedan localmente en `tp8/logs/`; se versionó únicamente la evidencia seleccionada. No se configuró una tarea automática del sistema: los scripts están listos para programarse y fueron probados manualmente, como pide la guía.
+`restore_test.ps1` se detiene si `foodstore_restore_test` ya existe. El ensayo repetido requiere eliminar **sólo esa base descartable**, tras revisar que es la copia del TP. El respaldo binario queda local en `tp8/backups/` y no se versiona. Los logs completos de ejecución quedan localmente en `tp8/logs/`; se versionó únicamente la evidencia seleccionada. La ejecución original de este TP fue manual. En la integración TPI2 se agregó y probó la programación diaria en `tpi2/`; ver `tpi2/evidencia/u6_tarea_programada.txt`. La restauración de ensayo sigue siendo manual para evitar sobreescribir una base existente.
 
 ## Decisiones y límites
 

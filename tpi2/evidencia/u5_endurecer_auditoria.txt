@@ -1,0 +1,12 @@
+BEGIN
+DO
+REVOKE
+GRANT
+COMMIT
+ privilege_type | has_table_privilege
+----------------+---------------------
+ DELETE         | f
+ INSERT         | f
+ SELECT         | t
+ UPDATE         | f
+(4 rows)

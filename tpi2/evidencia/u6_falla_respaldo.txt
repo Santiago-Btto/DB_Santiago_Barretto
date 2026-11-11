@@ -1,0 +1,6 @@
+Ensayo de fallo del respaldo con stub que lanza FALLO_SIMULADO_RESPALDO.
+Código de salida del wrapper: 1.
+Log: scheduled_20261111_104337.log.
+El log contiene ERROR FALLO_SIMULADO_RESPALDO: sí.
+El log contiene OK respaldo: no.
+Extracto literal del log: 2026-11-11T10:43:37.5915964-03:00 ERROR FALLO_SIMULADO_RESPALDO

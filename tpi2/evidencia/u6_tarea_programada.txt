@@ -1,0 +1,15 @@
+Tarea: FoodStore-BDII-U6-Diario
+LogonType: Interactive
+Estado: Ready
+Próxima ejecución diaria: 2026-11-11T20:00:00.0000000-03:00
+Último disparo por horario de prueba: 2026-11-11T10:49:49.0000000-03:00
+Resultado del Programador: 0
+Log automático: scheduled_20261111_104900.log
+Dump: foodstore_20261111_104900.dump
+Bytes: 6420169
+SHA256: CF030C21501A248DB14E0408EDBF727F7249FE6100F8247F52A7DDB34AA7B13E
+2026-11-11T10:49:00.2633907-03:00 Inicio health_check
+2026-11-11T10:49:00.3970461-03:00 OK health_check
+2026-11-11T10:49:00.4010497-03:00 maintenance: revisión semanal prevista para lunes
+2026-11-11T10:49:01.8850494-03:00 OK respaldo
+Límite: LogonType Interactive requiere sesión iniciada; S4U fue denegado por Windows.

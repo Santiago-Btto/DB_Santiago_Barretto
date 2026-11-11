@@ -1,0 +1,25 @@
+BEGIN
+DO
+     ?column?     | count
+------------------+-------
+ filas_originales |     3
+(1 row)
+
+DROP VIEW
+DROP TABLE
+DROP TABLE
+       ?column?        | count
+-----------------------+-------
+ origen_tras_reversion |     3
+(1 row)
+
+ROLLBACK
+     ?column?     | ?column?
+------------------+----------
+ vista_restaurada | t
+(1 row)
+
+         ?column?          | count
+---------------------------+-------
+ tabla_original_preservada |     3
+(1 row)

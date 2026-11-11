@@ -1,0 +1,11 @@
+# Contraste OpenCode de la programación de Unidad 6
+
+**Prompt (11/11/2026):** «Revisa SIN MODIFICAR los scripts `tpi2/ejecutar_mantenimiento_u6.ps1` y `tpi2/programar_mantenimiento_u6.ps1` para programar diariamente health_check, maintenance y backup de FoodStore. Contrasta `tp8/SPEC_U6.md` y evidencia `tpi2/evidencia/u6_tarea_programada.txt`. Señala como máximo 3 riesgos concretos y si se cumple el objetivo de respaldo programado; no inventes pruebas ni ejecutes comandos destructivos. Respuesta breve en español.»
+
+OpenCode 1.18.16, agente Plan, modelo `opencode/beam-free`, señaló:
+
+1. `Interactive` requiere que haya sesión de Windows iniciada. **Aceptado como límite.** Se intentó registrar `S4U`, pero Windows devolvió `Acceso denegado`; la tarea quedó `Interactive` y el informe no afirma respaldo cuando el usuario esté desconectado.
+2. El pipeline `& backup_foodstore.ps1 | Out-File` podía ocultar un error porque `$?` correspondía al pipeline. **Corregido.** Se separó la llamada del volcado al archivo; una falla simulada devolvió código 1, el log registró `ERROR` y no `OK respaldo` (`u6_falla_respaldo.txt`). También se corrigió la captura del stream 6 de `Write-Host`: sin ella la primera ejecución por horario quedó esperando y se detuvo; con ella `Start-ScheduledTask` y el siguiente disparo por horario terminaron con resultado 0.
+3. Se recomendó comprobar la existencia del script de respaldo y alinear la frecuencia con la spec. **Corregido.** El wrapper valida el archivo; `maintenance.sql` se ejecuta los lunes y se registra su omisión el resto de días; el chequeo y respaldo son diarios.
+
+La respuesta de IA se emitió antes de la prueba por horario final, por eso decía que aún no había evidencia de disparo automático. La evidencia posterior está en `u6_tarea_programada.txt` y prevalece sobre esa observación provisional.

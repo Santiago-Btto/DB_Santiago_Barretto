@@ -77,7 +77,7 @@ GRANT SELECT (id_usuario, nombre, apellido, email, rol_negocio, fecha_alta) ON u
 GRANT INSERT (nombre, apellido, email, rol_negocio, fecha_alta, password_hash) ON usuario TO admin_datos;
 GRANT UPDATE (nombre, apellido, email, rol_negocio, fecha_alta) ON usuario TO admin_datos;
 GRANT DELETE ON usuario TO admin_datos;
-GRANT SELECT, INSERT, UPDATE, DELETE ON auditoria_evento TO admin_datos;
+GRANT SELECT ON auditoria_evento TO admin_datos;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO admin_datos;
 GRANT EXECUTE ON FUNCTION fn_autenticar(TEXT, TEXT), fn_resetear_password(TEXT, TEXT) TO admin_datos;
 
