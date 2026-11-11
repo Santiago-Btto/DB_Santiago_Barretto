@@ -1,0 +1,23 @@
+BEGIN
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+psql:tp6/tp_fnbc_control_lote.sql:10: NOTICE:  la relación «lote» ya existe, omitiendo
+psql:tp6/tp_fnbc_control_lote.sql:15: NOTICE:  la relación «deposito» ya existe, omitiendo
+psql:tp6/tp_fnbc_control_lote.sql:20: NOTICE:  la relación «usuario» ya existe, omitiendo
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+psql:tp6/tp_fnbc_control_lote.sql:45: NOTICE:  la relación «control_lote_almacen» ya existe, omitiendo
+CREATE TABLE
+INSERT 0 0
+ responsable_control_id
+------------------------
+                    801
+(1 row)
+
+psql:tp6/tp_fnbc_control_lote.sql:71: ERROR:  La DF ResponsableControlID -> DepositoID no se cumple; migracion revertida
+CONTEXT:  función PL/pgSQL inline_code_block en la línea 9 en RAISE
+Codigo de salida esperado: 3
+origen_conflictivo|3
+normalizado_sin_cambio|30

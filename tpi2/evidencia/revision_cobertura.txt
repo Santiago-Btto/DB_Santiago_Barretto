@@ -1,0 +1,8 @@
+Inventario: 110 scripts
+Lotes iniciales: 107 rutas únicas
+Suplemento: 6 rutas (3 releídas y 3 nuevas)
+Unión revisada: 110 rutas únicas
+Faltantes: 0
+Hashes distintos del inventario: 0
+Errores de parser Python/JS/PowerShell: 0
+Alcance: revisión estática por IA; SQL no ejecutado globalmente

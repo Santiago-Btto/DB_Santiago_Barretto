@@ -1,5 +1,5 @@
 {
-  "total": 107,
+  "total": 110,
   "por_unidad": {
     "schema.sql": 1,
     "sql": 3,
@@ -12,13 +12,13 @@
     "tp8": 6,
     "tp9": 7,
     "tpi": 6,
-    "tpi2": 6
+    "tpi2": 9
   },
   "por_extension": {
     ".js": 3,
     ".ps1": 9,
-    ".py": 12,
-    ".sql": 83
+    ".py": 13,
+    ".sql": 85
   },
   "errores_parser": [],
   "alcance": "Inventario y comprobación sintáctica de Python/JS/PowerShell; SQL no ejecutado por seguridad"

@@ -1,0 +1,9 @@
+SQLITE|baseline_vs_opencode=iguales|adoptado=identico|solicitudes=8|errores_integridad=3|segunda_corrida_sin_cambios=true
+S1|CONFLICTO|producto 1 precio cambiado
+S2|RECHAZADO|producto 2 stock insuficiente
+S3|RECHAZADO|producto 3 eliminado
+S4|SIMULADO_APROBADO|coincide con instantanea del servidor
+S5|RECHAZADO|producto 5 ausente
+S6|RECHAZADO|borrador sin items
+S7|CONFLICTO|histórico
+S9|SIMULADO_APROBADO|coincide con instantanea del servidor

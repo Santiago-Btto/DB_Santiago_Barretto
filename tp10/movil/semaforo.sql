@@ -1,4 +1,4 @@
--- Solo actualiza la cola local; no abre conexión ni escribe en PostgreSQL.
+-- Solo actualiza la cola local; no abre conexion ni escribe en PostgreSQL.
 BEGIN IMMEDIATE;
 WITH evaluacion AS (
     SELECT c.solicitud_uuid,
@@ -31,7 +31,8 @@ WITH evaluacion AS (
            SUM(amarillo) AS amarillos,
            group_concat(motivo_rojo, '; ') AS motivo_rojo,
            group_concat(motivo_amarillo, '; ') AS motivo_amarillo
-    FROM evaluacion GROUP BY solicitud_uuid
+    FROM evaluacion
+    GROUP BY solicitud_uuid
 )
 UPDATE cola_sync
 SET estado = CASE WHEN resumen.rojos > 0 THEN 'RECHAZADO'

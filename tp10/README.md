@@ -49,3 +49,5 @@ En cada corrida del semáforo se compararon cantidad de pedidos, suma de stock y
 ## Entrega y límites
 
 La guía pide un `.zip` o enlace al repositorio con la etiqueta `tp8`; la etiqueta de este TP apunta a la rama nueva. Para la plataforma, el informe con nombre del repositorio es `DB_Santiago_Barretto.pdf`; los scripts, CSV, base SQLite, spec y evidencia están en la rama. `docs/ensayo_defensa.md` prepara el guion de 10 minutos; la defensa ante la cátedra debe realizarla el estudiante. Los archivos `docs/kiro/` tienen el formato solicitado, pero no se afirma haber abierto la aplicación Kiro: la redacción se hizo con Codex y la propuesta/revisión con OpenCode Plan, declarados en la DUIA.
+
+**Actualización TPI2:** OpenCode Build generó variantes del esquema y semáforo, luego revisadas y adoptadas por Codex. El cambio funcional aceptado fue un índice sobre `cola_sync(id_local)`; la base SQLite versionada recibió el índice con hash de filas idéntico antes/después. Los ocho escenarios de comparación con la versión anterior pasaron en memoria. La spec fue escrita con Codex; el historial y los resultados se detallan en `../tpi2/`.

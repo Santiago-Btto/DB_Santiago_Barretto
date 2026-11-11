@@ -1,0 +1,6 @@
+SQLITE_DB|indice_cola_id_local=1|hash_datos_igual=true|integrity_check=ok|foreign_key_check=0
+sha256_datos_antes=28533257f2d0f8159e603a9b43a6dad5ac4b02637f63fadb0f77400495f560d6
+sha256_datos_despues=28533257f2d0f8159e603a9b43a6dad5ac4b02637f63fadb0f77400495f560d6
+cola=CONFLICTO|1
+cola=RECHAZADO|2
+cola=SIMULADO_APROBADO|3

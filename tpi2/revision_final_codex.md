@@ -1,0 +1,56 @@
+# Revisión final de scripts · Food Store · Codex y OpenCode
+
+## Alcance y método
+
+OpenCode Plan examinó el contenido de los scripts versionados en siete lotes y devolvió **una fila por archivo** en `evidencia/revision_ia_lote_a.md` a `revision_ia_lote_g.md`. Los paquetes de lectura se generaron desde `inventario_scripts.tsv` con nombres, líneas y SHA-256. Se contrastaron las siete tablas con el inventario: 107 rutas, 107 filas únicas, cero faltantes en ese corte. Se revisaron SQL, JavaScript, PowerShell y Python. Esto es revisión estática; los SQL no se ejecutaron en bloque ni se atribuye a la IA una prueba que no realizó. El suplemento de los archivos modificados al cerrar esta integración se documenta aparte.
+
+Prompt base de los lotes: «Revisión estática final TPI Food Store. Lee todo el adjunto local que contiene N scripts completos con marcadores BEGIN/END y números de línea. No abras otros archivos, no ejecutes shell y no modifiques nada. Devuelve una fila por CADA ruta: ruta, revisado sí/no, hallazgo con línea o sin hallazgo prioritario. Luego máximo cuatro hallazgos accionables con severidad y propuesta. No inventes pruebas de ejecución ni omitas rutas». En B y C se permitió consultar la evidencia del mismo repositorio; el resto se limitó al paquete. Se usó OpenCode 1.18.16, agente Plan, modelo `opencode/beam-free`.
+
+Las decisiones siguientes se tomaron al contrastar cada señalamiento con el código y las salidas versionadas. **“Aceptado en laboratorio”** significa que el límite se declara y no se presenta el código como apto para producción; **“descartado”** indica que la sospecha no se sostiene para el comportamiento probado. No se atribuye una revisión personal al alumno que no ocurrió.
+
+| Lote y archivo | Decisión sobre el hallazgo | Fundamento o acción |
+|---|---|---|
+| A · `sql/01_restricciones_integridad.sql` | Aceptado | `DROP CONSTRAINT IF EXISTS` facilita repetir la migración; la restricción nueva se crea y se prueba después. La ausencia previa no se interpreta como prueba de que existía. |
+| A · `sql/02_pruebas_restricciones.sql` | Aceptado | El caso válido vive en una transacción de prueba que termina en `ROLLBACK`; la salida de ejecución permite comprobar la inserción. Una aserción adicional mejoraría el script histórico, sin afectar el TPI2. |
+| A · `sql/03_laboratorio_concurrencia.sql` | Descartado | Los 10 s del guion manual y los 5 s del ejecutor del TPI son laboratorios distintos, no dos valores del mismo proceso. |
+| A · `tpi/01_migracion_modelo_final.sql` | Aceptado como deuda de rendimiento | El índice `idx_tpi_producto_vigente_categoria` repite columnas y predicado del índice base con otro nombre. No altera integridad, pero añade costo de escritura; no se crea otra copia en TPI2. |
+| A · `tpi/02_objetos_programables.sql` | Descartado | El trigger valida la inserción o el **cambio de producto** en un detalle. Actualizar la cantidad de una venta histórica no equivale a añadir un producto nuevo; la vigencia se comprueba al registrar el pedido. |
+| A · `tpi/04_ejecutar_concurrencia.ps1` | Aceptado parcialmente | El identificador se escapa duplicando comillas simples, por lo que la afirmación de inyección directa no se sostiene. Una falla del laboratorio podría impedir la limpieza final: usar sólo datos sintéticos en copia aislada, como se documentó. |
+| A · `tpi/build_informe_tpi_pdf.py` | Descartado | La vista materializada y las mediciones de TP5 sí están versionadas en `tp5/`; el hallazgo resultó de revisar un lote sin esos artefactos. |
+| B · `tp3/02_consultas_candidatas.sql` | Aceptado como precondición | Requiere productos de la carga TP3; preflight y la opción de preparación del ejecutor documentan ese orden. No se afirma que funcione sobre `schema.sql` vacío. |
+| B · `tp3/03_indices_aceptados.sql` | Aceptado | La comparación textual de `pg_get_indexdef` depende del formato de PostgreSQL; se ejecutó y verificó en PG 18.4. Para otra versión convendría usar catálogos. |
+| B · `tp3/07_indice_competencia.sql` | Aceptado | Mismo límite de `pg_get_indexdef`; las mediciones originales son de PG 18.4. |
+| B · `tp3/build_anexos_pdf.py` | Aceptado | El anexo reconstruye una evidencia fechada específica; la ruta y el formato inglés `(n rows)` limitan su reutilización. El PDF entregado conserva la salida real. |
+| B · `tp3/dbeaver/00_preflight.sql` | Aceptado | `SB2026TP3` es el lote documentado de la variante DBeaver; debe cambiarse si se usa otro lote. |
+| B · `tp3/dbeaver/02_consultas_candidatas.sql` | Aceptado | DBeaver no ejecuta `\gset`; la CTE obtiene la categoría sin metacomandos. Las mediciones de cada variante se comparan dentro de su propio flujo. |
+| B · `tp3/run_mediciones.ps1` | Aceptado | Seed de catálogo y competencia son pasos separados descritos en `tp3/README.md`; el runner mide el núcleo del TP3. No se presenta como ejecutor único de todas las partes. |
+| C · `tp4/01_consultas_analiticas.sql` | Descartado | Diferencia de indentación sin cambio de SQL. |
+| C · `tp4/02_indices.sql` | Aceptado | Los tres índices se crean para probar hipótesis; dos se rechazan después de medir. `Heap Fetches: 8` no invalida el nodo `Index Only Scan`, pero limita su cobertura perfecta. |
+| C · `tp4/05_validacion.sql` | Aceptado como secuencia de evidencia | La captura con dos índices antecede al índice de producto de la prueba Q3, cuya creación y uso aparecen en `tp4/evidencia/20260915_producto/`. No se reescribe una salida histórica. |
+| C · `tp4/build_entrega_pdf.py` | **Corregido** | El preflight identifica `food_store_tp4_analitica`; se corrigió la copia nombrada en el generador y se regeneró el PDF sin cambiar las mediciones. |
+| D · `tp5/build_entrega_pdf.py` | Descartado | `tp5/duia.md`, `tp5/registro_codex.md` e `informe_mediciones.md` existen; el lote de código no incluía la documentación. |
+| D · `tp5/dbeaver/03_medicion_escritura.sql` | Aceptado | DBeaver y psql miden de forma distinta. La evidencia temporal verificable de escritura quedó en el flujo psql de `tp5/informe_mediciones.md`. |
+| E · `tp7/00_preparar_base_u5.sql` | Aceptado sólo para el simulacro | El identificador del log es un correo **sintético** de `foodstore.test`; no ejecutar esta forma con datos personales reales. La traza fue necesaria para reconstruir el incidente de laboratorio. |
+| E · `tp7/sql/auditoria_test.sql` | Aceptado sólo para servidor local | `ALTER SYSTEM` es global; existe `restaurar_configuracion_auditoria.sql`. No se recomienda habilitar `log_statement=all` en producción. |
+| E · `tp7/sql/roles.sql` | Aceptado para administrador de datos de laboratorio | La inserción de `password_hash` sirve para alta de usuarios sintéticos; no se concede lectura ni actualización de esa columna. Una aplicación real debería encapsular el alta en función de contraseña y no exponer DML directo. La escritura de la tabla de auditoría sí se retiró en TPI2. |
+| E · `tp7/sql/usuario_anon.sql` | Aceptado sólo como seudonimización de datos sintéticos | Los identificadores deterministas permiten enlazar filas, por lo que no se debe afirmar anonimato irreversible. La prueba solicitada compara agregados por rol y mes, con dos `EXCEPT=0`. |
+| F · `tp8/build_informe_u6_pdf.py` | Aceptado | Selecciona la evidencia fechada del ensayo; requiere el directorio versionado y es un generador de entrega, no un servicio. |
+| F · `tp8/restore_test.ps1` | Descartado como fallo del simulacro | El respaldo ya exige cero inválidos en origen y registra siete controles; la restauración verifica cero inválidos en destino. Si el origen cambió después, se emite aviso de conteos. |
+| F · `tp9/build_informe_tp9_pdf.py` | Descartado | Las salidas de MongoDB/PostgreSQL que lee están versionadas en `tp9/evidencia/20261102_133900/`; no se pretendió generarlas durante la construcción del PDF. |
+| F · `tp9/comparar_resultados.ps1` | Aceptado | Las rutas locales de herramientas son prerequisitos configurables del laboratorio Windows; el README indica motores y ejecución. |
+| F · `tp9/migrar_mongodb.js` | Aceptado | La ruta relativa presupone iniciar `mongosh` desde la raíz documentada del repositorio; el script se niega a sobreescribir la colección existente. |
+| F · `tp9/verificar_mongodb.js` | Aceptado | El código 121 fue el rechazo observado del validador; otro código hace fallar la prueba en vez de reportar un falso éxito. |
+| G · `tp10/movil/schema_sqlite.sql` | Corregido en la variante OpenCode | Se agregó índice sobre `cola_sync(id_local)` para la FK. Se descartó el índice adicional sobre `item_borrador(id_local)` porque la PK compuesta ya comienza por esa columna. |
+| G · `tp10/run_lab.py` | Aceptado | Los bloques `@expected-error` son parte del fixture versionado y C1–C7 pasaron. Un cambio del formato de marcas requeriría ajustar el runner. |
+| G · `tp10/servidor_snapshot.sql` | Aceptado | `fecha_copia` representa la hora de la instantánea; por diseño cambia en cada exportación. IDs y valores de negocio se controlan por separado. |
+| G · `tpi2/auditar_scripts.py` | Aceptado como prerequisito | El inventario requiere Python, Node y PowerShell para sus parsers; el script marca SQL como no ejecutado. Se documentan los prerequisitos en `tpi2/README.md`. |
+| G · `tpi2/build_informe.py` | Aceptado | El informe fuente posee una tabla de dos columnas. El generador está acotado a ese formato y el PDF se renderizó para inspección. |
+| G · `tpi2/ejecutar_mantenimiento_u6.ps1` | Descartado tras prueba de fallo | Una falla simulada devolvió código 1, dejó `ERROR` y nunca escribió `OK respaldo`; la corrida por horario terminó con resultado 0. La salida de `Write-Host` se capturó con stream 6. |
+| G · `tpi2/programar_mantenimiento_u6.ps1` | Aceptado | `powershell.exe` es la herramienta nativa de este laboratorio Windows. La tarea registrada a las 20:00 se probó por horario. |
+| G · `tpi2/u5_endurecer_auditoria.sql` | Descartado como falta funcional | Si `admin_datos` no existe, `REVOKE` falla con `ON_ERROR_STOP`; la migración no declara éxito. El prerequisito es `tp7/sql/roles.sql`. |
+
+## Correcciones comprobadas fuera de los hallazgos por archivo
+
+- La revisión Codex de la migración FNBC agregó guardas **antes del `COMMIT`**. Las pruebas válidas y dos fallos esperados están en `spec_u4_codex.md` y `evidencia/u4_*`.
+- OpenCode Build generó una variante real de `schema_sqlite.sql` y `semaforo.sql`; Codex eliminó un índice redundante y el BOM, comprobó equivalencia de ocho solicitudes y adoptó los dos archivos. `evidencia/sqlite_opencode_equivalencia.txt` y `evidencia/sqlite_db_indice_sin_cambio.txt` muestran los resultados; `tp10/movil/foodstore_movil.db` incorpora el índice sin cambiar filas.
+- `evidencia/revision_ia_suplemento.md` vuelve a leer los tres scripts cambiados después de los lotes y examina los tres nuevos. Los hallazgos sobre imports sobrantes y dependencias de `tp4/build_entrega_pdf.py` se aceptan como cosméticos y prerequisitos satisfechos: los dos planes anexos existen y el PDF se renderizó. El commit `b6cd291` existe y la prueba diferencial se ejecutó; OpenCode sólo leyó el script. La comprobación automática en `evidencia/revision_cobertura.txt` confirmó **110 rutas únicas, cero faltantes, cero hashes distintos y cero errores de parser**.

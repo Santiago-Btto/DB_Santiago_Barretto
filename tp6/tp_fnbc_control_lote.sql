@@ -57,6 +57,19 @@ FROM control_lote_almacen
 GROUP BY responsable_control_id
 HAVING count(DISTINCT deposito_id) > 1;
 
+-- No elegir arbitrariamente un deposito con min() si la DF no se cumple.
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT responsable_control_id
+        FROM control_lote_almacen
+        GROUP BY responsable_control_id
+        HAVING count(DISTINCT deposito_id) > 1
+    ) THEN
+        RAISE EXCEPTION 'La DF ResponsableControlID -> DepositoID no se cumple; migracion revertida';
+    END IF;
+END $$;
+
 -- Descomposicion por la DF violatoria:
 -- R1(ResponsableControlID, DepositoID) y R2(LoteID, ResponsableControlID).
 CREATE TABLE IF NOT EXISTS responsable_deposito (
@@ -86,6 +99,22 @@ CREATE OR REPLACE VIEW vw_control_lote_almacen_compatibilidad AS
 SELECT lote_id, deposito_id, responsable_control_id
 FROM control_lote_responsable
 NATURAL JOIN responsable_deposito;
+
+-- La prueba de ida y vuelta debe abortar ANTES de confirmar la migracion.
+DO $$
+BEGIN
+    IF EXISTS (
+        (SELECT lote_id, deposito_id, responsable_control_id FROM control_lote_almacen
+         EXCEPT
+         SELECT lote_id, deposito_id, responsable_control_id FROM vw_control_lote_almacen_compatibilidad)
+        UNION ALL
+        (SELECT lote_id, deposito_id, responsable_control_id FROM vw_control_lote_almacen_compatibilidad
+         EXCEPT
+         SELECT lote_id, deposito_id, responsable_control_id FROM control_lote_almacen)
+    ) THEN
+        RAISE EXCEPTION 'La migracion FNBC no conserva exactamente los datos; transaccion revertida';
+    END IF;
+END $$;
 
 COMMIT;
 

@@ -1,6 +1,6 @@
-# Unidad 8 - requisitos EARS (spec para Kiro)
+# Unidad 8 - requisitos EARS (spec redactada con Codex)
 
-Esta spec se redactó antes de implementar los scripts de la tablet. El nombre oficial de la guía es «TP8, Unidad 8»; `tp10/` mantiene la secuencia del repositorio después de TP9/Unidad 7. Todos los datos de la prueba son sintéticos y se opera sobre una copia PostgreSQL.
+Esta spec se redactó con Codex antes de implementar los scripts de la tablet. El nombre `docs/kiro/` conserva la referencia histórica a la guía, pero no indica uso de la aplicación Kiro. El nombre oficial de la guía es «TP8, Unidad 8»; `tp10/` mantiene la secuencia del repositorio después de TP9/Unidad 7. Todos los datos de la prueba son sintéticos y se opera sobre una copia PostgreSQL.
 
 | ID | Requisito verificable | Casos |
 |---|---|---|

@@ -43,8 +43,8 @@ CREATE TABLE cola_sync (
     FOREIGN KEY (id_local) REFERENCES pedido_borrador(id_local) ON DELETE RESTRICT
 ) STRICT;
 
--- Tabla de importación: conserva incluso productos dados de baja para resolver
--- solicitudes pendientes; la caché no depende de esta tabla por FK.
+-- Conserva productos dados de baja para resolver solicitudes pendientes;
+-- la caché offline no depende de esta tabla por FK.
 CREATE TABLE snapshot_servidor (
     id INTEGER PRIMARY KEY,
     nombre TEXT NOT NULL,
@@ -58,3 +58,4 @@ CREATE TABLE snapshot_servidor (
 
 CREATE INDEX idx_cola_sync_pendiente ON cola_sync(estado);
 CREATE INDEX idx_item_borrador_producto ON item_borrador(producto_id);
+CREATE INDEX idx_cola_sync_id_local ON cola_sync(id_local);

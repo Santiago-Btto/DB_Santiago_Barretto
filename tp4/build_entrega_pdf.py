@@ -51,7 +51,7 @@ story=[]
 story += [Spacer(1,1.8*cm), P('Trabajo Práctico 4', 'Title'), P('Reportes analíticos asistidos por IA sobre Food Store', 'H1x')]
 story += [P('Base de Datos II - Unidad 2 - Semana 4'), P('Estudiante: Santiago Barretto'), P('Repositorio: DB_Santiago_Barretto'), Spacer(1,0.5*cm)]
 story += [P('<b>Conclusión.</b> El trabajo se ejecutó sobre copias aisladas de la base masiva. Se aceptó únicamente el índice que PostgreSQL usó en el plan real; las hipótesis no usadas se documentan como descartadas.')]
-story += [P('1. Preparación y protocolo', 'H1x'), P('Se creó la copia <b>food_store_tp4_evidencia</b> a partir de la base masiva de TP3. La carga disponible contiene 20.000 clientes, 50.000 productos, 200.000 pedidos y 400.000 detalles. Se trabajó con respaldo previo y sin modificar practica_bd2.')]
+story += [P('1. Preparación y protocolo', 'H1x'), P('Se creó la copia <b>food_store_tp4_analitica</b> a partir de la base masiva de TP3, tal como registra el preflight versionado. La carga disponible contiene 20.000 clientes, 50.000 productos, 200.000 pedidos y 400.000 detalles. Se trabajó con respaldo previo y sin modificar practica_bd2.')]
 story += [P('2. Parte 1 - Consultas analíticas y medición', 'H1x')]
 data=[[P('Consulta'),P('Plan antes'),P('Cambio'),P('Plan después'),P('Mejora / decisión')],
       [P('Q1 Facturación por categoría y mes'),P('Parallel Hash Join, Hash Join y Seq Scan de detalle; 392,846 ms.'),P('Índices de fecha y cobertura de pedido.'),P('Tres Hash Join; Seq Scan conservado; 424,434 ms.'),P('0,93x. Rechazado: empeoró y no usó los índices nuevos.')],
